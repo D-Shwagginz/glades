@@ -1,0 +1,17 @@
+name: glades
+version: 0.1.0
+
+authors:
+  - D. Shwagginz <93965353+D-Shwagginz@users.noreply.github.com>
+
+targets:
+  glades:
+    main: src/glades.cr
+    
+dependencies:
+  raylib-cr:
+    github: sol-vin/raylib-cr
+
+crystal: 1.9.2
+
+license: MIT
