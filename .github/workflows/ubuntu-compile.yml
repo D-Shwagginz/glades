@@ -10,8 +10,8 @@ jobs:
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
       - name: Install Crystal libs
-        run: shards Install
+        run: shards install
       - name: Install Raylib
-        run: ls
+        run: ./lib/raylib-cr/rsrc/native/install.sh
       - name: Compile Code
         run: shards build
