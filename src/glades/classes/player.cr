@@ -34,28 +34,38 @@ module Glades
     end
 
     def inputs
+      move_forward_location = Raylib::Vector3.new(
+        x: Raylib.get_camera_forward(pointerof(@camera)).x,
+        z: Raylib.get_camera_forward(pointerof(@camera)).z
+      ).scale(@movement_speed)
+
+      move_right_location = Raylib::Vector3.new(
+        x: Raylib.get_camera_right(pointerof(@camera)).x,
+        z: Raylib.get_camera_right(pointerof(@camera)).z
+      ).scale(@movement_speed)
+
       if Raylib.key_down?(ControlConstants::FORWARD)
-        @location = @location + Raylib.get_camera_forward(pointerof(@camera)).scale(@movement_speed)
+        @location = @location + move_forward_location
         @camera.position = @location + @camera_relative_location
-        @camera.target = @camera.target + Raylib.get_camera_forward(pointerof(@camera)).scale(@movement_speed) + @camera_relative_location
+        @camera.target = @camera.target + move_forward_location + @camera_relative_location
       end
 
       if Raylib.key_down?(ControlConstants::BACKWARD)
-        @location = @location - Raylib.get_camera_forward(pointerof(@camera)).scale(@movement_speed)
+        @location = @location - move_forward_location
         @camera.position = @location + @camera_relative_location
-        @camera.target = @camera.target - Raylib.get_camera_forward(pointerof(@camera)).scale(@movement_speed) + @camera_relative_location
+        @camera.target = @camera.target - move_forward_location + @camera_relative_location
       end
 
       if Raylib.key_down?(ControlConstants::RIGHT)
-        @location = @location + Raylib.get_camera_right(pointerof(@camera)).scale(@movement_speed)
+        @location = @location + move_right_location
         @camera.position = @location + @camera_relative_location
-        @camera.target = @camera.target + Raylib.get_camera_right(pointerof(@camera)).scale(@movement_speed) + @camera_relative_location
+        @camera.target = @camera.target + move_right_location + @camera_relative_location
       end
 
       if Raylib.key_down?(ControlConstants::LEFT)
-        @location = @location - Raylib.get_camera_right(pointerof(@camera)).scale(@movement_speed)
+        @location = @location - move_right_location
         @camera.position = @location + @camera_relative_location
-        @camera.target = @camera.target - Raylib.get_camera_right(pointerof(@camera)).scale(@movement_speed) + @camera_relative_location
+        @camera.target = @camera.target - move_right_location + @camera_relative_location
       end
 
       Raylib.camera_yaw(pointerof(@camera), -Raylib.get_mouse_delta.x*ControlConstants::SENSITIVITY, false)
