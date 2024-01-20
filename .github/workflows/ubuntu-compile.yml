@@ -12,6 +12,6 @@ jobs:
       - name: Install Crystal libs
         run: shards install
       - name: Install Raylib
-        run: ./lib/raylib-cr/rsrc/native/install.sh
+        run: ls
       - name: Compile Code
         run: shards build
