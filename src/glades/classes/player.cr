@@ -39,7 +39,7 @@ module Glades
       Raylib.update_camera(pointerof(@camera), Raylib::CameraMode::Custom)
 
       Raylib.camera_pitch(pointerof(@camera), @rotation.x*Raylib::DEG2RAD, true, false, false)
-      Raylib.camera_yaw(pointerof(@camera), @rotation.y*Raylib::DEG2RAD, false)
+      Raylib.camera_yaw(pointerof(@camera), (@rotation.y)*Raylib::DEG2RAD, false)
       Raylib.camera_roll(pointerof(@camera), @rotation.z*Raylib::DEG2RAD)
     end
 
@@ -89,6 +89,9 @@ module Glades
       end
 
       Raylib.camera_yaw(pointerof(@camera), -Raylib.get_mouse_delta.x*ControlConstants::SENSITIVITY, false)
+      # @rotation = @rotation + Raylib::Vector3.new(y: -Raylib.get_mouse_delta.x*ControlConstants::SENSITIVITY)*Raylib::RAD2DEG
+      print @rotation
+
       Raylib.camera_pitch(pointerof(@camera), -Raylib.get_mouse_delta.y*ControlConstants::SENSITIVITY, true, false, false)
     end
   end
