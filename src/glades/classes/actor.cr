@@ -12,6 +12,10 @@ module Glades
       Glades.add_actor(self)
     end
 
+    # The update code that is run by `Glades.update`
+    # def update
+    # end
+
     def destroy
       Glades.delete_actor(self)
     end

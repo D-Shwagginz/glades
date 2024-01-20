@@ -1,4 +1,5 @@
 module Glades
+  # The player class
   class Player < Actor
     property movement_speed : Float32 = 0.01
     getter camera : Raylib::Camera = Raylib::Camera.new

@@ -1,4 +1,6 @@
 module Glades
+
+  # Draws the screen
   def self.draw
     Raylib.begin_drawing
     Raylib.clear_background(Raylib::RAYWHITE)
