@@ -8,10 +8,24 @@ module Glades
 
     def initialize(
       location : Raylib::Vector3 = Raylib::Vector3.new,
-      rotation : Raylib::Vector3 = Raylib::Vector3.new
+      rotation : Raylib::Vector3 = Raylib::Vector3.new,
+      bounding_box_scale : Raylib::Vector3 = Raylib::Vector3.new
     )
       @location = location
       @rotation = rotation
+
+      @bounding_box_scale = bounding_box_scale
+      @bounding_box = Raylib::BoundingBox.new(
+        min: Raylib::Vector3.new(x: @bounding_box_scale.x*0.5 + @location.x, y: @location.y, z: @bounding_box_scale.z*0.5 + @location.z),
+        max: Raylib::Vector3.new(x: @bounding_box_scale.x*1.5 + @location.x, y: @bounding_box_scale.y + @location.y, z: @bounding_box_scale.z*1.5 + @location.z)
+      )
+
+      @camera_relative_location = Raylib::Vector3.new(
+        x: (@bounding_box.max.x + @bounding_box.min.x)/2,
+        y: (@bounding_box.max.y + @bounding_box.min.y)/1.15,
+        z: (@bounding_box.max.z + @bounding_box.min.z)/2
+      )
+
       Glades.add_actor(self)
 
       @camera.position = @location + @camera_relative_location
@@ -30,42 +44,48 @@ module Glades
     end
 
     def update
+      # Match the bounding box to the player's movements
+      @bounding_box = Raylib::BoundingBox.new(
+        min: Raylib::Vector3.new(x: @bounding_box_scale.x*0.5 + @location.x, y: @location.y, z: @bounding_box_scale.z*0.5 + @location.z),
+        max: Raylib::Vector3.new(x: @bounding_box_scale.x*1.5 + @location.x, y: @bounding_box_scale.y + @location.y, z: @bounding_box_scale.z*1.5 + @location.z)
+      )
+
       inputs
     end
 
     def inputs
       move_forward_location = Raylib::Vector3.new(
-        x: Raylib.get_camera_forward(pointerof(@camera)).x,
-        z: Raylib.get_camera_forward(pointerof(@camera)).z
+        x: Glades.get_actor_forward_vector(self).x,
+        z: Glades.get_actor_forward_vector(self).z
       ).scale(@movement_speed)
 
       move_right_location = Raylib::Vector3.new(
-        x: Raylib.get_camera_right(pointerof(@camera)).x,
-        z: Raylib.get_camera_right(pointerof(@camera)).z
+        x: Glades.get_actor_right_vector(self).x,
+        z: Glades.get_actor_right_vector(self).z
       ).scale(@movement_speed)
 
       if Raylib.key_down?(ControlConstants::FORWARD)
         @location = @location + move_forward_location
         @camera.position = @location + @camera_relative_location
-        @camera.target = @camera.target + move_forward_location + @camera_relative_location
+        @camera.target = @camera.target + move_forward_location
       end
 
       if Raylib.key_down?(ControlConstants::BACKWARD)
         @location = @location - move_forward_location
         @camera.position = @location + @camera_relative_location
-        @camera.target = @camera.target - move_forward_location + @camera_relative_location
+        @camera.target = @camera.target - move_forward_location
       end
 
       if Raylib.key_down?(ControlConstants::RIGHT)
         @location = @location + move_right_location
         @camera.position = @location + @camera_relative_location
-        @camera.target = @camera.target + move_right_location + @camera_relative_location
+        @camera.target = @camera.target + move_right_location
       end
 
       if Raylib.key_down?(ControlConstants::LEFT)
         @location = @location - move_right_location
         @camera.position = @location + @camera_relative_location
-        @camera.target = @camera.target - move_right_location + @camera_relative_location
+        @camera.target = @camera.target - move_right_location
       end
 
       Raylib.camera_yaw(pointerof(@camera), -Raylib.get_mouse_delta.x*ControlConstants::SENSITIVITY, false)
