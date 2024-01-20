@@ -89,7 +89,7 @@ module Glades
       end
 
       Raylib.camera_yaw(pointerof(@camera), -Raylib.get_mouse_delta.x*ControlConstants::SENSITIVITY, false)
-      # @rotation = @rotation + Raylib::Vector3.new(y: -Raylib.get_mouse_delta.x*ControlConstants::SENSITIVITY)*Raylib::RAD2DEG
+      @rotation = @rotation + Raylib::Vector3.new(y: -Raylib.get_mouse_delta.x*ControlConstants::SENSITIVITY)*Raylib::RAD2DEG
       print @rotation
 
       Raylib.camera_pitch(pointerof(@camera), -Raylib.get_mouse_delta.y*ControlConstants::SENSITIVITY, true, false, false)

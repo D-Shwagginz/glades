@@ -1,7 +1,7 @@
 module Glades
   def self.get_actor_forward_vector(actor : Actor) : Raylib::Vector3
     location = actor.location
-    rotation = actor.rotation
+    rotation = actor.rotation*Raylib::DEG2RAD
 
     return Raymath.vector3_normalize(
       Raylib::Vector3.new(
@@ -26,7 +26,7 @@ module Glades
 
   def self.get_actor_right_vector(actor : Actor) : Raylib::Vector3
     location = actor.location
-    rotation = actor.rotation
+    rotation = actor.rotation*Raylib::DEG2RAD
 
     return Raymath.vector3_normalize(
       Raylib::Vector3.new(
