@@ -11,8 +11,6 @@ targets:
 dependencies:
   raylib-cr:
     github: sol-vin/raylib-cr
-  ode-cr:
-    github: sol-vin/ode-cr
 
 crystal: 1.9.2
 
