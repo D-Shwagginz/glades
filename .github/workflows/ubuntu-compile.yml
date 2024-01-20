@@ -1,0 +1,15 @@
+name: Ubuntu - Compile Code
+on: [push, pull_request]
+jobs:
+  build:
+    name: Ubuntu - Compile Code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download source
+        uses: actions/checkout@v2
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
+      - name: Install Crystal libs
+        run: shards Install
+      - name: Compile Code
+        run: shards build
