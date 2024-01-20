@@ -1,5 +1,4 @@
 module Glades
-  
   # Array of all actors created
   @@actors : Array(Actor) = [] of Actor
 

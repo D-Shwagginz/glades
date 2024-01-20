@@ -1,5 +1,4 @@
 module Glades
-
   # Updates the game
   def self.update
     # Updates each actor

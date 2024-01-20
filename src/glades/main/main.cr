@@ -1,5 +1,4 @@
 module Glades
-
   # Runs the program
   def self.run
     resx = 1024
@@ -9,7 +8,6 @@ module Glades
     Raylib.set_target_fps(60)
 
     until Raylib.close_window?
-
       # Player spawn test
       if Raylib.key_pressed?(Raylib::KeyboardKey::L)
         @@player.as(Actor).destroy unless @@player.nil?
