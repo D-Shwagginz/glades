@@ -21,5 +21,11 @@ jobs:
         run: shards install
       - name: Setup VS Dev Environment
         uses: seanmiddleditch/gha-setup-vsdevenv@v4
+      - name: Install Raylib
+        run: powershell ./lib/raylib-cr/rsrc/native/windows/install.ps1
+      - name: Set environment variables
+        run: |
+          $env:LIB="${env:LIB};C:\raylib"
+          $env:PATH="${env:PATH};C:\raylib"
       - name: Compile Code
         run: shards build
