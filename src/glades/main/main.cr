@@ -14,9 +14,17 @@ module Glades
     until Raylib.close_window?
       # Player spawn test
       if Raylib.key_pressed?(Raylib::KeyboardKey::L)
+        Raylib.disable_cursor
         @@player.as(Actor).destroy unless @@player.nil?
         @@player = Player.new(
-          location: Raylib::Vector3.new(y: 0),
+          bounding_box_scale: Raylib::Vector3.new(x: 0.5, y: 1, z: 0.5)
+        )
+      end
+
+      if Raylib.key_pressed?(Raylib::KeyboardKey::P)
+        Raylib.disable_cursor
+        @@player.as(Actor).destroy unless @@player.nil?
+        @@player = PlayerSpectator.new(
           bounding_box_scale: Raylib::Vector3.new(x: 0.5, y: 1, z: 0.5)
         )
       end
