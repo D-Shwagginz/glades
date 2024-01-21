@@ -1,15 +1,15 @@
 module Glades
   # Runs the program
-  def self.run
+  def self.run(start_map : MapFile = MapFile.new)
+    @@start_map = start_map
+
     resx = 1600
     resy = 1200
 
+    Map.load(map_file: start_map)
+
     Raylib.init_window(resx, resy, "Glades")
     Raylib.set_target_fps(60)
-    model = Raylib.load_model("./rsrc/testmap.obj")
-    map = Map.new(
-      model: model
-    )
 
     until Raylib.close_window?
       # Player spawn test

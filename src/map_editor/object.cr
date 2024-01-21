@@ -1,0 +1,44 @@
+class MapFile
+  class Object
+    property location : Vector3 = Vector3.new
+
+    def write(file : String | Path) : Int
+      File.open(file, "w+") do |file|
+        return write(file)
+      end
+    end
+
+    def write(io : IO) : Int
+      byte_size = 0_u32
+
+      io.write_bytes(location.x.to_u8, IO::ByteFormat::LittleEndian)
+      byte_size += 1
+      io.write_bytes(location.y.to_u8, IO::ByteFormat::LittleEndian)
+      byte_size += 1
+      io.write_bytes(location.z.to_u8, IO::ByteFormat::LittleEndian)
+      byte_size += 1
+
+      byte_size
+    end
+
+    def self.read(filename : Path | String) : Object
+      File.open(filename) do |file|
+        return read(file)
+      end
+    end
+
+    def self.read(io : IO) : Object
+      object = Object.new
+
+      location = Vector3.new
+
+      location.x = file.read_bytes(UInt8, IO::ByteFormat::LittleEndian)
+      location.y = file.read_bytes(UInt8, IO::ByteFormat::LittleEndian)
+      location.z = file.read_bytes(UInt8, IO::ByteFormat::LittleEndian)
+
+      object.location = location
+
+      object
+    end
+  end
+end

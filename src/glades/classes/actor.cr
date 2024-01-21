@@ -18,6 +18,13 @@ module Glades
       Glades.add_actor(self)
     end
 
+    def reset_bounding_box
+      @bounding_box = Raylib::BoundingBox.new(
+        min: Raylib::Vector3.new(x: @bounding_box_scale.x*0.5 + @location.x, y: @location.y, z: @bounding_box_scale.z*0.5 + @location.z),
+        max: Raylib::Vector3.new(x: @bounding_box_scale.x*1.5 + @location.x, y: @bounding_box_scale.y + @location.y, z: @bounding_box_scale.z*1.5 + @location.z)
+      )
+    end
+
     # The update code that is run by `Glades.update`
     # def update
     # end

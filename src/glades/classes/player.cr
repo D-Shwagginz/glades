@@ -6,6 +6,7 @@ module Glades
 
     @camera_relative_location : Raylib::Vector3 = Raylib::Vector3.new
 
+    # 0 = No Collision
     # 1 = "Pushes the player out in the direction from the collision_center to the player"
     # 2 = "Resets the player to the location before the collision"
     @collision_mode = 2
