@@ -1,6 +1,7 @@
 require "./glades/**"
 require "./map_editor/**"
 require "raylib-cr"
+require "raylib-cr/rlgl"
 require "option_parser"
 
 # The main Glades module

@@ -1,12 +1,12 @@
 class MapFile
-  class ColorCube < Object
+  class TexCube < Object
     property size : Vector3 = Vector3.new
-    property color : Vector3 = Vector3.new
+    property texture_path : String = ""
 
     def write(io : IO) : Int
       byte_size = 0
 
-      io.write_bytes(Objects::ColorCube.value.to_u8, IO::ByteFormat::LittleEndian)
+      io.write_bytes(Objects::TexCube.value.to_u8, IO::ByteFormat::LittleEndian)
       byte_size += 1
 
       io.write_bytes(location.x.to_u8, IO::ByteFormat::LittleEndian)
@@ -23,18 +23,17 @@ class MapFile
       io.write_bytes(size.z.to_u8, IO::ByteFormat::LittleEndian)
       byte_size += 1
 
-      io.write_bytes(color.x.to_u8, IO::ByteFormat::LittleEndian)
+      io.write_bytes(texture_path.size.to_u8, IO::ByteFormat::LittleEndian)
       byte_size += 1
-      io.write_bytes(color.y.to_u8, IO::ByteFormat::LittleEndian)
-      byte_size += 1
-      io.write_bytes(color.z.to_u8, IO::ByteFormat::LittleEndian)
-      byte_size += 1
+
+      io << texture_path
+      byte_size += texture_path.size
 
       byte_size
     end
 
-    def self.read(file : IO) : ColorCube
-      object = ColorCube.new
+    def self.read(file : IO) : TexCube
+      object = TexCube.new
 
       location = Vector3.new
       location.x = file.read_bytes(UInt8, IO::ByteFormat::LittleEndian)
@@ -48,11 +47,9 @@ class MapFile
       size.z = file.read_bytes(UInt8, IO::ByteFormat::LittleEndian)
       object.size = size
 
-      color = Vector3.new
-      color.x = file.read_bytes(UInt8, IO::ByteFormat::LittleEndian)
-      color.y = file.read_bytes(UInt8, IO::ByteFormat::LittleEndian)
-      color.z = file.read_bytes(UInt8, IO::ByteFormat::LittleEndian)
-      object.color = color
+      texture_path_len = file.read_bytes(UInt8, IO::ByteFormat::LittleEndian)
+
+      object.texture_path = file.gets(texture_path_len).to_s
 
       object
     end

@@ -16,4 +16,19 @@ module Glades
 
   # The main player
   @@player : Player | Nil
+
+  # Loaded textures
+  @@textures : Array(Tuple(String, Raylib::Texture2D)) = [] of {String, Raylib::Texture2D}
+
+  def self.load_texture(path : String | Path)
+    image = Raylib.load_image(path)
+    Raylib.image_rotate(pointerof(image), 180)
+    texture = Raylib.load_texture_from_image(image)
+    @@textures << {path, texture}
+    Raylib.unload_image(image)
+  end
+
+  def self.find_texture(path : String | Path)
+    @@textures.find { |tuple| tuple[0] == path }
+  end
 end

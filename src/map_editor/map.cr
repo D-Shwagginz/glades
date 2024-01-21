@@ -7,6 +7,7 @@ class MapFile
 
   enum Objects
     ColorCube
+    TexCube
   end
 
   property num_of_objects : UInt16 = 0_u16
@@ -46,10 +47,11 @@ class MapFile
 
     map.num_of_objects.times do
       current_object_type = file.read_bytes(UInt8, IO::ByteFormat::LittleEndian)
-
       case current_object_type
-      when 0
+      when Objects::ColorCube.value
         map.objects << ColorCube.read(file)
+      when Objects::TexCube.value
+        map.objects << TexCube.read(file)
       end
     end
 

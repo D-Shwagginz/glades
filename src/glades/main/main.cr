@@ -6,10 +6,10 @@ module Glades
     resx = 1600
     resy = 1200
 
-    Map.load(map_file: start_map)
-
     Raylib.init_window(resx, resy, "Glades")
     Raylib.set_target_fps(60)
+
+    Map.load(map_file: start_map)
 
     until Raylib.close_window?
       # Player spawn test
@@ -31,6 +31,10 @@ module Glades
 
       update
       draw
+    end
+
+    @@textures.each do |tuple|
+      Raylib.unload_texture(tuple[1])
     end
 
     Raylib.close_window

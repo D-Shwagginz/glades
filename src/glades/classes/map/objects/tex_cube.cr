@@ -1,8 +1,9 @@
 module Glades
   class Map
-    class ColorCube < Actor
+    class TexCube < Actor
       property size : Raylib::Vector3 = Raylib::Vector3.new
-      property color : Raylib::Color = Raylib::Color.new
+      property texture : Raylib::Texture2D = Raylib::Texture2D.new
+      property texture_path : String = ""
 
       def initialize(
         @location : Raylib::Vector3 = Raylib::Vector3.new,
@@ -24,34 +25,39 @@ module Glades
         )
       end
 
+      def reset_texture
+        if Glades.find_texture(@texture_path)
+          @texture = Glades.find_texture(@texture_path).as(Tuple)[1]
+        else
+          Glades.load_texture(@texture_path)
+          @texture = Glades.find_texture(@texture_path).as(Tuple)[1]
+        end
+      end
+
       def draw
-        Raylib.draw_cube_v((@bounding_box.max + @bounding_box.min)/2, @size, @color)
+        Glades.draw_cube_texture(@texture, (@bounding_box.max + @bounding_box.min)/2, @size, Raylib::WHITE)
         # Raylib.draw_bounding_box(@bounding_box, Raylib::RED)
       end
 
-      def self.from_file(file : MapFile::ColorCube)
-        color_cube = ColorCube.new
+      def self.from_file(file : MapFile::TexCube)
+        tex_cube = TexCube.new
 
-        color_cube.location = Raylib::Vector3.new(
+        tex_cube.location = Raylib::Vector3.new(
           x: file.location.x,
           y: file.location.y,
           z: file.location.z
         )
 
-        color_cube.size = Raylib::Vector3.new(
+        tex_cube.size = Raylib::Vector3.new(
           x: file.size.x,
           y: file.size.y,
           z: file.size.z
         )
 
-        color_cube.color = Raylib::Color.new(
-          r: file.color.x,
-          g: file.color.y,
-          b: file.color.z,
-          a: 255
-        )
+        tex_cube.texture_path = file.texture_path
 
-        color_cube.reset_bounding_box
+        tex_cube.reset_bounding_box
+        tex_cube.reset_texture
       end
     end
   end
