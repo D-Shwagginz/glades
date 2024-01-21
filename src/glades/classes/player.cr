@@ -9,8 +9,8 @@ module Glades
     # 1 = "Pushes the player out in the direction from the collision_center to the player"
     # 2 = "Resets the player to the location before the collision"
     @collision_mode = 2
-    @collision_mode_2_old_location : Raylib::Vector3 = Raylib::Vector3.new
     @colliding : Bool = false
+    @collision_mode_2_old_location : Raylib::Vector3 = Raylib::Vector3.new
 
     def initialize(
       @location : Raylib::Vector3 = Raylib::Vector3.new,
@@ -52,13 +52,28 @@ module Glades
         max: Raylib::Vector3.new(x: @bounding_box_scale.x*1.5 + @location.x, y: @bounding_box_scale.y + @location.y, z: @bounding_box_scale.z*1.5 + @location.z)
       )
 
+      if @collision_mode == 2
+        # COLLISION SYSTEM 2 #
+        if Glades.check_collisions(@bounding_box)
+          # Resets the player to the location before the collision
+          # Removes the relativity to the location
+          @camera.target = @camera.target - @location
+
+          @location = @collision_mode_2_old_location
+
+          # Adds the location relativity back after updating the location
+          @camera.target = @camera.target + @location
+
+          @camera.position = @location + @camera_relative_location
+        else
+          # Sets the old player location for collision system 2
+          @collision_mode_2_old_location = @location
+        end
+      end
+
       inputs
 
       Glades.check_collisions(self)
-
-      # Sets the old player location for collision system 2
-      @collision_mode_2_old_location = @location if @collision_mode == 2 && @collision_mode_2_old_location != @location && !@colliding
-      @colliding = false
     end
 
     def collided(other_actor : Actor)
@@ -73,19 +88,6 @@ module Glades
         @location = @location + push_vector
         @camera.position = @location + @camera_relative_location
         @camera.target = @camera.target + push_vector
-
-        # COLLISION SYSTEM 2 #
-        # Resets the player to the location before the collision
-      elsif @collision_mode == 2
-        # Removes the relativity to the location
-        @camera.target = @camera.target - @location
-
-        @location = @collision_mode_2_old_location + Raymath.vector3_normalize(@collision_mode_2_old_location - @location)*PhysicsConstants::COLLISION_PUSH_STRENGTH
-
-        # Adds the location relativity back after updating the location
-        @camera.target = @camera.target + @location
-
-        @camera.position = @location + @camera_relative_location
       end
     end
 

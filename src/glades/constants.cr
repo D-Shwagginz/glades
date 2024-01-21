@@ -12,6 +12,6 @@ module Glades
   end
 
   module PhysicsConstants
-    COLLISION_PUSH_STRENGTH = 1
+    COLLISION_PUSH_STRENGTH = 0.5
   end
 end
