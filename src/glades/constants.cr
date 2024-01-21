@@ -10,4 +10,8 @@ module Glades
   module PlayerConstants
     PLAYER_SIZE = Raylib::Vector2.new(x: 10, y: 10)
   end
+
+  module PhysicsConstants
+    COLLISION_PUSH_STRENGTH = 1
+  end
 end

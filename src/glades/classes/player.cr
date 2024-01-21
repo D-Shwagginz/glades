@@ -1,20 +1,22 @@
 module Glades
   # The player class
   class Player < Actor
-    property movement_speed : Float32 = 0.01
+    property movement_speed : Float32 = 0.06
     getter camera : Raylib::Camera = Raylib::Camera.new
 
     @camera_relative_location : Raylib::Vector3 = Raylib::Vector3.new
 
-    def initialize(
-      location : Raylib::Vector3 = Raylib::Vector3.new,
-      rotation : Raylib::Vector3 = Raylib::Vector3.new,
-      bounding_box_scale : Raylib::Vector3 = Raylib::Vector3.new
-    )
-      @location = location
-      @rotation = rotation
+    # 1 = "Pushes the player out in the direction from the collision_center to the player"
+    # 2 = "Resets the player to the location before the collision"
+    @collision_mode = 2
+    @collision_mode_2_old_location : Raylib::Vector3 = Raylib::Vector3.new
+    @colliding : Bool = false
 
-      @bounding_box_scale = bounding_box_scale
+    def initialize(
+      @location : Raylib::Vector3 = Raylib::Vector3.new,
+      @rotation : Raylib::Vector3 = Raylib::Vector3.new,
+      @bounding_box_scale : Raylib::Vector3 = Raylib::Vector3.new
+    )
       @bounding_box = Raylib::BoundingBox.new(
         min: Raylib::Vector3.new(x: @bounding_box_scale.x*0.5 + @location.x, y: @location.y, z: @bounding_box_scale.z*0.5 + @location.z),
         max: Raylib::Vector3.new(x: @bounding_box_scale.x*1.5 + @location.x, y: @bounding_box_scale.y + @location.y, z: @bounding_box_scale.z*1.5 + @location.z)
@@ -51,17 +53,55 @@ module Glades
       )
 
       inputs
+
+      Glades.check_collisions(self)
+
+      # Sets the old player location for collision system 2
+      @collision_mode_2_old_location = @location if @collision_mode == 2 && @collision_mode_2_old_location != @location && !@colliding
+      @colliding = false
+    end
+
+    def collided(other_actor : Actor)
+      @colliding = true
+
+      # COLLISION SYSTEM 1 #
+      # Pushes the player out in the direction from the collision_center to the player
+      if @collision_mode == 1
+        collision_center = (other_actor.bounding_box.max + other_actor.bounding_box.min)/2
+        push_vector = Raymath.vector3_normalize(@location - collision_center)*PhysicsConstants::COLLISION_PUSH_STRENGTH
+
+        @location = @location + push_vector
+        @camera.position = @location + @camera_relative_location
+        @camera.target = @camera.target + push_vector
+
+        # COLLISION SYSTEM 2 #
+        # Resets the player to the location before the collision
+      elsif @collision_mode == 2
+        # Removes the relativity to the location
+        @camera.target = @camera.target - @location
+
+        @location = @collision_mode_2_old_location + Raymath.vector3_normalize(@collision_mode_2_old_location - @location)*PhysicsConstants::COLLISION_PUSH_STRENGTH
+
+        # Adds the location relativity back after updating the location
+        @camera.target = @camera.target + @location
+
+        @camera.position = @location + @camera_relative_location
+      end
+    end
+
+    def draw
+      Raylib.draw_bounding_box(@bounding_box, Raylib::RED)
     end
 
     def inputs
       move_forward_location = Raylib::Vector3.new(
-        x: Glades.get_actor_forward_vector(self).x,
-        z: Glades.get_actor_forward_vector(self).z
+        x: Glades.get_forward_vector(@rotation).x,
+        z: Glades.get_forward_vector(@rotation).z
       ).scale(@movement_speed)
 
       move_right_location = Raylib::Vector3.new(
-        x: Glades.get_actor_right_vector(self).x,
-        z: Glades.get_actor_right_vector(self).z
+        x: Glades.get_right_vector(@rotation).x,
+        z: Glades.get_right_vector(@rotation).z
       ).scale(@movement_speed)
 
       if Raylib.key_down?(ControlConstants::FORWARD)
@@ -90,7 +130,6 @@ module Glades
 
       Raylib.camera_yaw(pointerof(@camera), -Raylib.get_mouse_delta.x*ControlConstants::SENSITIVITY, false)
       @rotation = @rotation + Raylib::Vector3.new(y: -Raylib.get_mouse_delta.x*ControlConstants::SENSITIVITY)*Raylib::RAD2DEG
-      print @rotation
 
       Raylib.camera_pitch(pointerof(@camera), -Raylib.get_mouse_delta.y*ControlConstants::SENSITIVITY, true, false, false)
     end

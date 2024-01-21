@@ -7,6 +7,5 @@ module Glades
         actor.update
       end
     end
-    puts @@actors.size
   end
 end

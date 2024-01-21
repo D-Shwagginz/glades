@@ -6,7 +6,12 @@ module Glades
     unless @@player.nil?
       Raylib.begin_mode_3d(@@player.as(Player).camera)
       Raylib.draw_grid(10, 1.0)
-      Raylib.draw_bounding_box(@@player.as(Player).bounding_box, Raylib::RED)
+      # Draws each actor
+      @@actors.each do |actor|
+        if actor.responds_to?(:draw)
+          actor.draw
+        end
+      end
       Raylib.end_mode_3d
     end
     Raylib.end_drawing

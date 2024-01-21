@@ -6,14 +6,10 @@ module Glades
     getter bounding_box : Raylib::BoundingBox
 
     def initialize(
-      location : Raylib::Vector3 = Raylib::Vector3.new,
-      rotation : Raylib::Vector3 = Raylib::Vector3.new,
-      bounding_box_scale : Raylib::Vector3 = Raylib::Vector3.new
+      @location : Raylib::Vector3 = Raylib::Vector3.new,
+      @rotation : Raylib::Vector3 = Raylib::Vector3.new,
+      @bounding_box_scale : Raylib::Vector3 = Raylib::Vector3.new
     )
-      @location = location
-      @rotation = rotation
-
-      @bounding_box_scale = bounding_box_scale
       @bounding_box = Raylib::BoundingBox.new(
         min: Raylib::Vector3.new(x: @bounding_box_scale.x*0.5 + @location.x, y: @location.y, z: @bounding_box_scale.z*0.5 + @location.z),
         max: Raylib::Vector3.new(x: @bounding_box_scale.x*1.5 + @location.x, y: @bounding_box_scale.y + @location.y, z: @bounding_box_scale.z*1.5 + @location.z)
@@ -24,6 +20,14 @@ module Glades
 
     # The update code that is run by `Glades.update`
     # def update
+    # end
+
+    # The draw code that is run by `Glades.draw`
+    # def draw
+    # end
+
+    # The collision code that is run by `Glades.check_collisions`
+    # def collided(other_actor : Actor)
     # end
 
     def destroy
