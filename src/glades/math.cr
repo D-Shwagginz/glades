@@ -46,6 +46,10 @@ module Glades
   #   return lowest
   # end
 
+  def self.mapfile_vector3_to_raylib(v3 : MapFile::Vector3) : Raylib::Vector3
+    return Raylib::Vector3.new(x: v3.x, y: v3.y, z: v3.z)
+  end
+
   def self.get_forward_vector(rotation : Raylib::Vector3, radians : Bool = false) : Raylib::Vector3
     rotation *= Raylib::DEG2RAD unless radians
 

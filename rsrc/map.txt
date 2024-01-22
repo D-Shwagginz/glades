@@ -3,4 +3,4 @@ map
 
 # Floor
 
-dobj(./rsrc/blocks.dobj)
+dobj(0 0 0, 1 1 1, ./rsrc/blocks.dobj)

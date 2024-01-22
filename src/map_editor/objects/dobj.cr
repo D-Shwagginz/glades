@@ -17,6 +17,20 @@ class MapFile
         io.write_bytes(Objects::DObj.value.to_u8, IO::ByteFormat::LittleEndian)
         byte_size += 1
 
+        io.write_bytes(location.x.to_i16, IO::ByteFormat::LittleEndian)
+        byte_size += 1
+        io.write_bytes(location.y.to_i16, IO::ByteFormat::LittleEndian)
+        byte_size += 1
+        io.write_bytes(location.z.to_i16, IO::ByteFormat::LittleEndian)
+        byte_size += 1
+
+        io.write_bytes(size.x.to_u8, IO::ByteFormat::LittleEndian)
+        byte_size += 1
+        io.write_bytes(size.y.to_u8, IO::ByteFormat::LittleEndian)
+        byte_size += 1
+        io.write_bytes(size.z.to_u8, IO::ByteFormat::LittleEndian)
+        byte_size += 1
+
         io.write_bytes(file_path.to_s.size.to_u8, IO::ByteFormat::LittleEndian)
         byte_size += 1
 
@@ -45,23 +59,36 @@ class MapFile
       byte_size
     end
 
-    def self.read(filename : Path | String) : DObj
+    def self.read(filename : Path | String, location : Vector3 = Vector3.new, size : Vector3 = Vector3.new) : DObj
       File.open(filename) do |file|
-        return read(file, false, filename)
+        return read(file, false, filename, location, size)
       end
     end
 
-    def self.read(file : IO, read_from_map : Bool = false, file_path : String | Path = "") : DObj
+    def self.read(file : IO, read_from_map : Bool = false, file_path : String | Path = "", location : Vector3 = Vector3.new, size : Vector3 = Vector3.new) : DObj
       if read_from_map
+        location = Vector3.new
+        location.x = file.read_bytes(Int16, IO::ByteFormat::LittleEndian)
+        location.y = file.read_bytes(Int16, IO::ByteFormat::LittleEndian)
+        location.z = file.read_bytes(Int16, IO::ByteFormat::LittleEndian)
+
+        size = Vector3.new
+        size.x = file.read_bytes(UInt8, IO::ByteFormat::LittleEndian)
+        size.y = file.read_bytes(UInt8, IO::ByteFormat::LittleEndian)
+        size.z = file.read_bytes(UInt8, IO::ByteFormat::LittleEndian)
+
         file_path_len = file.read_bytes(UInt8, IO::ByteFormat::LittleEndian)
 
         file_path = file.gets(file_path_len).to_s
 
-        read(file_path)
+        read(file_path, location: location, size: size)
       else
         obj = DObj.new
 
         obj.file_path = file_path
+
+        obj.location = location
+        obj.size = size
 
         obj.num_of_objects = file.read_bytes(UInt16, IO::ByteFormat::LittleEndian)
 
@@ -80,7 +107,36 @@ class MapFile
     end
 
     def self.from_parameters(chars : Array(Char)) : DObj
-      dobj = DObj.read(chars.join)
+      dobj = DObj.new
+      current_parameter = [] of Char
+      parameters = [] of String
+
+      chars.each.with_index do |char, index|
+        if char == ','
+          next
+        elsif char == ' '
+          parameters << current_parameter.join
+          current_parameter = [] of Char
+        else
+          current_parameter << char
+
+          if index == chars.size - 1
+            parameters << current_parameter.join
+          end
+        end
+      end
+
+      puts parameters
+
+      dobj.location.x = parameters[0].to_i16
+      dobj.location.y = parameters[1].to_i16
+      dobj.location.z = parameters[2].to_i16
+
+      dobj.size.x = parameters[3].to_u8
+      dobj.size.y = parameters[4].to_u8
+      dobj.size.z = parameters[5].to_u8
+
+      dobj.file_path = parameters[6].to_s
 
       dobj
     end

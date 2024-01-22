@@ -31,22 +31,29 @@ module Glades
         Raylib.draw_bounding_box(@bounding_box, Raylib::RED)
       end
 
-      def self.from_file(file : MapFile::ColorCube)
+      def self.from_file(
+        file : MapFile::ColorCube,
+        location : Raylib::Vector3 | MapFile::Vector3 = Raylib::Vector3.new,
+        size : Raylib::Vector3 | MapFile::Vector3 = Raylib::Vector3.new
+      )
         color_cube = ColorCube.new
 
         color_cube.has_collision = file.has_collision
 
-        color_cube.location = Raylib::Vector3.new(
+        location = Glades.mapfile_vector3_to_raylib(location) if location.is_a?(MapFile::Vector3)
+        size = Glades.mapfile_vector3_to_raylib(size) if size.is_a?(MapFile::Vector3)
+
+        color_cube.location = (Raylib::Vector3.new(
           x: file.location.x,
           y: file.location.y,
           z: file.location.z
-        ) * GameConstants::GLOBAL_SCALE
+        ) + location) * GameConstants::GLOBAL_SCALE
 
-        color_cube.size = Raylib::Vector3.new(
+        color_cube.size = (Raylib::Vector3.new(
           x: file.size.x,
           y: file.size.y,
           z: file.size.z
-        ) * GameConstants::GLOBAL_SCALE
+        ) + size) * GameConstants::GLOBAL_SCALE
 
         color_cube.color = Raylib::Color.new(
           r: file.color.x,
