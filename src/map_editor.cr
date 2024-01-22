@@ -1,77 +1,65 @@
 require "./map_editor/**"
 
-map = MapFile.new
+def parse_text(path : String | Path) : Tuple(String, MapFile, MapFile::DObj, Bool)
+  map = MapFile.new
+  dobj = MapFile::DObj.new
+  is_dobj = false
+  map_name = ""
 
-color_block = MapFile::ColorCube.new
+  File.open(path) do |file|
+    file_string = file.gets_to_end
 
-location = MapFile::Vector3.new
-location.x = 5
-location.y = 0
-location.z = 0
+    file_string.each_line.with_index do |line, line_index|
+      chars = line.chars
+      command = ""
+      parameters = [] of Char
 
-color_block.location = location
+      if chars.size > 0 && chars[0] != '#'
+        chars.each.with_index do |char, index|
+          if line_index == 0
+            is_dobj = true if line == "dobj"
+          elsif line_index == 1
+            map_name = line
+          elsif char == '('
+            command = chars[0...index].join
+            chars.delete_at(0..index)
+            chars.delete_at(-1)
+            parameters = chars
+            break
+          end
+        end
 
-size = MapFile::Vector3.new
-size.x = 1
-size.y = 2
-size.z = 1
+        case command
+        when "colorcube"
+          map.objects << MapFile::ColorCube.from_parameters(parameters)
+          dobj.objects << MapFile::ColorCube.from_parameters(parameters)
+        when "texcube"
+          map.objects << MapFile::TexCube.from_parameters(parameters)
+          dobj.objects << MapFile::TexCube.from_parameters(parameters)
+        when "dobj"
+          map.objects << MapFile::DObj.from_parameters(parameters)
+          dobj.objects << MapFile::DObj.from_parameters(parameters)
+        end
+      end
+    end
 
-color_block.size = size
-
-color = MapFile::Vector3.new
-color.x = 0
-color.y = 94
-color.z = 255
-
-color_block.color = color
-
-map.objects << color_block
-
-color_block = MapFile::ColorCube.new
-
-location = MapFile::Vector3.new
-location.x = 2
-location.y = 3
-location.z = 4
-
-color_block.location = location
-
-size = MapFile::Vector3.new
-size.x = 2
-size.y = 1
-size.z = 2
-
-color_block.size = size
-
-color = MapFile::Vector3.new
-color.x = 40
-color.y = 100
-color.z = 221
-
-color_block.color = color
-
-map.objects << color_block
-
-tex_block = MapFile::TexCube.new
-
-location = MapFile::Vector3.new
-location.x = 2
-location.y = 0
-location.z = 2
-
-tex_block.location = location
-
-size = MapFile::Vector3.new
-size.x = 1
-size.y = 1
-size.z = 1
-
-tex_block.size = size
-
-tex_block.texture_path = "./rsrc/test.png"
-
-map.objects << tex_block
-
-File.open("./rsrc/testmap.dmap", "w+") do |file|
-  map.write(file)
+    return {map_name, map, dobj, is_dobj}
+  end
 end
+
+def export_text(path : String | Path, export_path : String | Path)
+  map = parse_text(path)
+  extension = ".dmap"
+  extension = ".dobj" if map[3]
+
+  File.open(export_path + map[0] + extension, "w+") do |file|
+    if map[3]
+      map[2].write(file)
+    else
+      map[1].write(file)
+    end
+  end
+end
+
+export_text("./rsrc/obj.txt", "./rsrc/")
+export_text("./rsrc/map.txt", "./rsrc/")

@@ -1,6 +1,7 @@
 class MapFile
   class Object
     property location : Vector3 = Vector3.new
+    property has_collision : Bool = true
 
     def write(file : String | Path) : Int
       File.open(file, "w+") do |file|
@@ -10,6 +11,9 @@ class MapFile
 
     def write(io : IO) : Int
       byte_size = 0_u32
+
+      io.write_bytes(has_collision.to_unsafe.to_u8, IO::ByteFormat::LittleEndian)
+      byte_size += 1
 
       io.write_bytes(location.x.to_u8, IO::ByteFormat::LittleEndian)
       byte_size += 1
@@ -27,8 +31,10 @@ class MapFile
       end
     end
 
-    def self.read(io : IO) : Object
+    def self.read(file : IO) : Object
       object = Object.new
+
+      object.has_collision = false if file.read_bytes(UInt8, IO::ByteFormat::LittleEndian) == 0
 
       location = Vector3.new
 

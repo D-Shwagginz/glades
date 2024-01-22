@@ -1,0 +1,13 @@
+dobj
+blocks
+
+colorcube(1, 1 0 -4, 4 1 1, 0 255 0)
+colorcube(0, 1 0 4, 4 1 1, 0 0 255)
+
+colorcube(0, 0 0 13, 8 8 8, 255 10 180)
+
+colorcube(0, 0 10 13, 255 8 8, 255 255 0)
+
+texcube(1, 1 4 4, 1 1 4, ./rsrc/test.png)
+
+texcube(1, 1 1 1, 1 1 1, ./rsrc/test.png)

@@ -1,0 +1,6 @@
+map
+map
+
+# Floor
+
+dobj(./rsrc/blocks.dobj)

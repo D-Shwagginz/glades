@@ -14,4 +14,8 @@ module Glades
   module PhysicsConstants
     COLLISION_PUSH_STRENGTH = 0.5
   end
+
+  module GameConstants
+    GLOBAL_SCALE = 0.1
+  end
 end

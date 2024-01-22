@@ -1,13 +1,14 @@
 class MapFile
   struct Vector3
-    property x : UInt8 = 0_u8
-    property y : UInt8 = 0_u8
-    property z : UInt8 = 0_u8
+    property x = 0
+    property y = 0
+    property z = 0
   end
 
   enum Objects
     ColorCube
     TexCube
+    DObj
   end
 
   property num_of_objects : UInt16 = 0_u16
@@ -28,7 +29,11 @@ class MapFile
     byte_size += 2
 
     objects.each do |object|
-      byte_size += object.write(io)
+      if object.is_a?(DObj)
+        byte_size += object.write(io, true)
+      else
+        byte_size += object.write(io)
+      end
     end
 
     byte_size
@@ -52,6 +57,8 @@ class MapFile
         map.objects << ColorCube.read(file)
       when Objects::TexCube.value
         map.objects << TexCube.read(file)
+      when Objects::DObj.value
+        map.objects << DObj.read(file, true)
       end
     end
 
