@@ -126,8 +126,6 @@ class MapFile
         end
       end
 
-      puts parameters
-
       dobj.location.x = parameters[0].to_i16
       dobj.location.y = parameters[1].to_i16
       dobj.location.z = parameters[2].to_i16

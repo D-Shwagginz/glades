@@ -1,4 +1,5 @@
 dobj
 blocks
 
-texcube(1, 1 1 1, 1 1 1, ./rsrc/test.png)
+texcube(1, 1 1 1, 1 2 1, ./rsrc/test.png)
+texcube(1, 1 4 4, 2 1 1, ./rsrc/test.png)
