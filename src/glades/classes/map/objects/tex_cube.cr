@@ -38,7 +38,7 @@ module Glades
 
       def draw
         Glades.draw_cube_texture(@texture, (@bounding_box.max + @bounding_box.min)/2, @size, Raylib::WHITE)
-        # Raylib.draw_bounding_box(@bounding_box, Raylib::RED)
+        Raylib.draw_bounding_box(@bounding_box, Raylib::RED)
       end
 
       def self.from_file(
@@ -57,13 +57,18 @@ module Glades
           x: file.location.x,
           y: file.location.y,
           z: file.location.z
-        ) + location) * GameConstants::GLOBAL_SCALE
+        ) + location) * GameConstants::GLOBAL_SCALE * size * GameConstants::LOCATION_SCALE
 
         tex_cube.size = (Raylib::Vector3.new(
           x: file.size.x,
           y: file.size.y,
           z: file.size.z
-        ) + size - 1) * GameConstants::GLOBAL_SCALE
+        ) * size) * GameConstants::GLOBAL_SCALE
+
+        tex_cube.location = Raylib::Vector3.new(
+          x: tex_cube.location.x + tex_cube.size.x/2,
+          y: tex_cube.location.y,
+          z: tex_cube.location.z + tex_cube.size.z/2)
 
         tex_cube.texture_path = file.texture_path
 

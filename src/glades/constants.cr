@@ -16,6 +16,7 @@ module Glades
   end
 
   module GameConstants
-    GLOBAL_SCALE = 0.1
+    GLOBAL_SCALE   = 0.1
+    LOCATION_SCALE = 0.1
   end
 end

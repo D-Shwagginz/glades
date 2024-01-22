@@ -1,5 +1,5 @@
 require "./glades/**"
-require "./map_editor/**"
+require "./map_editor"
 require "raylib-cr"
 require "raylib-cr/rlgl"
 require "option_parser"

@@ -47,13 +47,18 @@ module Glades
           x: file.location.x,
           y: file.location.y,
           z: file.location.z
-        ) + location) * GameConstants::GLOBAL_SCALE
+        ) + location) * GameConstants::GLOBAL_SCALE * size * GameConstants::LOCATION_SCALE
 
         color_cube.size = (Raylib::Vector3.new(
           x: file.size.x,
           y: file.size.y,
           z: file.size.z
-        ) + size) * GameConstants::GLOBAL_SCALE
+        ) * size) * GameConstants::GLOBAL_SCALE
+
+        color_cube.location = Raylib::Vector3.new(
+          x: color_cube.location.x + color_cube.size.x/2,
+          y: color_cube.location.y,
+          z: color_cube.location.z + color_cube.size.z/2)
 
         color_cube.color = Raylib::Color.new(
           r: file.color.x,

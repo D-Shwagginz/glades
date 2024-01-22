@@ -1,5 +1,18 @@
 dobj
-blocks
+house
 
-texcube(1, 1 1 1, 1 2 1, ./rsrc/test.png)
-texcube(1, 1 4 4, 2 1 1, ./rsrc/test.png)
+# Front Side
+colorcube(1, 0 0 0, 2 2 1, 0 0 255)
+colorcube(1, 30 0 0, 2 2 1, 0 0 255)
+
+# Roof
+colorcube(1, 0 20 0, 5 1 5, 0 0 255)
+
+# Left Side
+colorcube(1, 40 0 10, 1 2 3, 0 0 255)
+
+# Right Side
+colorcube(1, 0 0 10, 1 2 3, 0 0 255)
+
+# Back Side
+colorcube(1, 0 0 40, 5 2 1, 0 0 255)

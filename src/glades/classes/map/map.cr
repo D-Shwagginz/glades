@@ -3,7 +3,7 @@ module Glades
     def self.load_object(
       object : MapFile::Object,
       location_offset : Raylib::Vector3 | MapFile::Vector3 = Raylib::Vector3.new,
-      size_offset : Raylib::Vector3 | MapFile::Vector3 = Raylib::Vector3.new
+      size_offset : Raylib::Vector3 | MapFile::Vector3 = Raylib::Vector3.new(x: 1, y: 1, z: 1)
     )
       if object.is_a?(MapFile::ColorCube)
         ColorCube.from_file(object.as(MapFile::ColorCube), location_offset, size_offset)
