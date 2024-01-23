@@ -1,6 +1,11 @@
 module Glades
+  # The current game shader
+  class_getter shader : Raylib::Shader = Raylib::Shader.new
+
+  class_getter lights : Array(Light) = [] of Light
+
   # Array of all actors created
-  @@actors : Array(Actor) = [] of Actor
+  class_getter actors : Array(Actor) = [] of Actor
 
   # Adds an actor onto the `actors` array.
   # Used by the `Actor` class to add itself on initialize

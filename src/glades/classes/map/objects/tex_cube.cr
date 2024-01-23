@@ -4,6 +4,7 @@ module Glades
       property size : Raylib::Vector3 = Raylib::Vector3.new
       property texture : Raylib::Texture2D = Raylib::Texture2D.new
       property texture_path : String = ""
+      property model : Raylib::Model = Raylib::Model.new
 
       def initialize(
         @location : Raylib::Vector3 = Raylib::Vector3.new,
@@ -27,6 +28,18 @@ module Glades
         )
       end
 
+      def set_shader(shader : Raylib::Shader)
+        material = Raylib::Material.new(
+          shader: shader,
+          maps: @model.materials[0].maps,
+          params: @model.materials[0].params
+        )
+
+        Raylib.set_material_texture(pointerof(material), Raylib::MaterialMapIndex::Albedo, @texture)
+
+        @model.materials[0] = material
+      end
+
       def reset_texture
         if Glades.find_texture(@texture_path)
           @texture = Glades.find_texture(@texture_path).as(Tuple)[1]
@@ -37,7 +50,8 @@ module Glades
       end
 
       def draw
-        Glades.draw_cube_texture(@texture, (@bounding_box.max + @bounding_box.min)/2, @size, Raylib::WHITE)
+        Raylib.draw_model(@model, (@bounding_box.max + @bounding_box.min)/2, 1, Raylib::WHITE)
+        # Glades.draw_cube_texture(@texture, (@bounding_box.max + @bounding_box.min)/2, @size, Raylib::WHITE)
         Raylib.draw_bounding_box(@bounding_box, Raylib::RED)
       end
 
@@ -72,8 +86,12 @@ module Glades
 
         tex_cube.texture_path = file.texture_path
 
-        tex_cube.reset_bounding_box
         tex_cube.reset_texture
+
+        mesh = Raylib.gen_mesh_cube(tex_cube.size.x, tex_cube.size.y, tex_cube.size.z)
+        tex_cube.model = Raylib.load_model_from_mesh(mesh)
+
+        tex_cube.reset_bounding_box
       end
     end
   end

@@ -40,6 +40,10 @@ module Glades
     # def collided(other_actor : Actor)
     # end
 
+    # The function to set up a shader
+    # def set_shader(shader : Raylib::Shader)
+    # end
+
     def destroy
       Glades.delete_actor(self)
     end

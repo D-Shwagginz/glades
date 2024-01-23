@@ -7,7 +7,6 @@ map
 # Second line is the name of the map/map-file
 
 # colorcube(has_collision, location_x location_y location_z, size_x size_y size_z, color_r color_g color_b)
-# colorcube(1, 0 0 0, 1 1 1, 150 4 60)
 
 # texcube(has_collision, location_x location_y location_z, size_x size_y size_z, path/to/texture)
 # texcube(1, 0 0 0, 1 1 1, ./rsrc/test.png)

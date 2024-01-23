@@ -3,6 +3,7 @@ module Glades
     class ColorCube < Actor
       property size : Raylib::Vector3 = Raylib::Vector3.new
       property color : Raylib::Color = Raylib::Color.new
+      property model : Raylib::Model = Raylib::Model.new
 
       def initialize(
         @location : Raylib::Vector3 = Raylib::Vector3.new,
@@ -26,8 +27,17 @@ module Glades
         )
       end
 
+      def set_shader(shader : Raylib::Shader)
+        @model.materials[0] = Raylib::Material.new(
+          shader: shader,
+          maps: @model.materials[0].maps,
+          params: @model.materials[0].params
+        )
+      end
+
       def draw
-        Raylib.draw_cube_v((@bounding_box.max + @bounding_box.min)/2, @size, @color)
+        Raylib.draw_model(@model, (@bounding_box.max + @bounding_box.min)/2, 1, @color)
+        # Raylib.draw_cube_v((@bounding_box.max + @bounding_box.min)/2, @size, @color)
         Raylib.draw_bounding_box(@bounding_box, Raylib::RED)
       end
 
@@ -66,6 +76,9 @@ module Glades
           b: file.color.z,
           a: 255
         )
+
+        mesh = Raylib.gen_mesh_cube(color_cube.size.x, color_cube.size.y, color_cube.size.z)
+        color_cube.model = Raylib.load_model_from_mesh(mesh)
 
         color_cube.reset_bounding_box
       end

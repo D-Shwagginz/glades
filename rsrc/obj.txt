@@ -2,7 +2,7 @@ dobj
 house
 
 # Front Side
-colorcube(1, 0 0 0, 2 2 1, 0 0 255)
+texcube(1, 0 0 0, 2 2 1, ./rsrc/test.png)
 colorcube(1, 30 0 0, 2 2 1, 0 0 255)
 
 # Roof

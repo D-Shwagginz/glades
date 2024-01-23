@@ -11,6 +11,28 @@ module Glades
 
     Map.load(map_file: start_map)
 
+    # Load basic lighting shader
+    @@shader = Raylib.load_shader("./rsrc/shaders/lighting.vs", "./rsrc/shaders/lighting.fs")
+
+    # Get some required shader locations
+    @@shader.locs[Raylib::ShaderLocationIndex::VectorView.value] = Raylib.get_shader_location(@@shader, "viewPos")
+    # NOTE: "matModel" location name is automatically assigned on shader loading,
+    # no need to get the location again if using that uniform name
+    # @@shader.locs[Raylib::ShaderLocationIndex::MatrixModel.value] = Raylib.get_shader_location(@@shader, "matModel")
+
+    # Ambient light level (some basic lighting)
+    ambient_loc = Raylib.get_shader_location(@@shader, "ambient")
+    Raylib.set_shader_value(@@shader, ambient_loc, LibC::Float[0.1, 0.1, 0.1, 1.0], Raylib::ShaderUniformDataType::Vec4.value)
+
+    @@actors.each do |actor|
+      if actor.responds_to?(:set_shader)
+        actor.set_shader(@@shader)
+      end
+    end
+
+    # Create lights
+    @@lights << Lights.create(Lights::Type::Point, Raylib::Vector3.new(x: 0, y: 0, z: 0), Raylib::Vector3.new, Raylib::WHITE, @@shader)
+
     until Raylib.close_window?
       # Player spawn test
       if Raylib.key_pressed?(Raylib::KeyboardKey::L)
@@ -33,6 +55,8 @@ module Glades
       update
       draw
     end
+
+    Raylib.unload_shader(@@shader)
 
     @@textures.each do |tuple|
       Raylib.unload_texture(tuple[1])
