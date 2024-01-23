@@ -44,6 +44,7 @@ module Glades
     # def set_shader(shader : Raylib::Shader)
     # end
 
+    # The function to destroy the actor
     def destroy
       Glades.delete_actor(self)
     end

@@ -13,6 +13,8 @@ module Glades
         object.as(MapFile::DObj).objects.each do |obj_object|
           load_object(obj_object, object.as(MapFile::DObj).location, object.as(MapFile::DObj).size)
         end
+      elsif object.is_a?(MapFile::Light)
+        Light.from_file(object.as(MapFile::Light), location_offset, size_offset)
       end
     end
 

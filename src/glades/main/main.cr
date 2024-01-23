@@ -10,6 +10,11 @@ module Glades
     Raylib.set_target_fps(60)
 
     Map.load(map_file: start_map)
+    ambient_light = Raylib::Color.new(
+      r: start_map.ambient_light.x,
+      g: start_map.ambient_light.y,
+      b: start_map.ambient_light.z
+    )
 
     # Load basic lighting shader
     @@shader = Raylib.load_shader("./rsrc/shaders/lighting.vs", "./rsrc/shaders/lighting.fs")
@@ -22,7 +27,7 @@ module Glades
 
     # Ambient light level (some basic lighting)
     ambient_loc = Raylib.get_shader_location(@@shader, "ambient")
-    Raylib.set_shader_value(@@shader, ambient_loc, LibC::Float[0.1, 0.1, 0.1, 1.0], Raylib::ShaderUniformDataType::Vec4.value)
+    Raylib.set_shader_value(@@shader, ambient_loc, LibC::Float[ambient_light.r/255, ambient_light.g/255, ambient_light.b/255, 1.0], Raylib::ShaderUniformDataType::Vec4.value)
 
     @@actors.each do |actor|
       if actor.responds_to?(:set_shader)
@@ -30,8 +35,9 @@ module Glades
       end
     end
 
-    # Create lights
-    @@lights << Lights.create(Lights::Type::Point, Raylib::Vector3.new(x: 0, y: 0, z: 0), Raylib::Vector3.new, Raylib::Color.new(r: 255, g: 10, b: 10), @@shader)
+    @@lights.each do |light|
+      light.load_light(@@shader)
+    end
 
     until Raylib.close_window?
       # Player spawn test

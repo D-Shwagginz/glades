@@ -82,6 +82,11 @@ module Glades
 
         color_cube.reset_bounding_box
       end
+
+      def destroy
+        Raylib.unload_model(@model)
+        Glades.delete_actor(self)
+      end
     end
   end
 end

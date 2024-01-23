@@ -14,6 +14,7 @@ class MapFile
 
   property num_of_objects : UInt16 = 0_u16
   property objects : Array(Object) = [] of Object
+  property ambient_light : Vector3 = Vector3.new
 
   def write(file : String | Path) : Int
     File.open(file, "w+") do |file|
@@ -23,6 +24,13 @@ class MapFile
 
   def write(io : IO) : Int
     byte_size = 0
+
+    io.write_bytes(ambient_light.x.to_u8, IO::ByteFormat::LittleEndian)
+    byte_size += 1
+    io.write_bytes(ambient_light.y.to_u8, IO::ByteFormat::LittleEndian)
+    byte_size += 1
+    io.write_bytes(ambient_light.z.to_u8, IO::ByteFormat::LittleEndian)
+    byte_size += 1
 
     num_of_objects = objects.size.to_u16
 
@@ -48,6 +56,12 @@ class MapFile
 
   def self.read(file : IO) : MapFile
     map = MapFile.new
+
+    ambient_light = Vector3.new
+    ambient_light.x = file.read_bytes(UInt8, IO::ByteFormat::LittleEndian)
+    ambient_light.y = file.read_bytes(UInt8, IO::ByteFormat::LittleEndian)
+    ambient_light.z = file.read_bytes(UInt8, IO::ByteFormat::LittleEndian)
+    map.ambient_light = ambient_light
 
     map.num_of_objects = file.read_bytes(UInt16, IO::ByteFormat::LittleEndian)
 

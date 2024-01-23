@@ -1,5 +1,5 @@
 dobj
-test
+house
 
 # Front Side
 texcube(1, 0 0 0, 2 2 1, ./rsrc/test.png)
@@ -16,5 +16,3 @@ colorcube(1, 0 0 10, 1 2 3, 0 0 255)
 
 # Back Side
 colorcube(1, 0 0 40, 5 2 1, 0 0 255)
-
-dobj(-100 0 100, 1 1 1, ./rsrc/house.dobj)

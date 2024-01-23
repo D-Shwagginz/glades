@@ -1,11 +1,23 @@
 module Glades
   # The current game shader
-  class_getter shader : Raylib::Shader = Raylib::Shader.new
+  @@shader : Raylib::Shader = Raylib::Shader.new
 
-  class_getter lights : Array(Light) = [] of Light
+  @@lights : Array(Map::Light) = [] of Map::Light
+
+  # Adds a light onto the `lights` array.
+  # Used by the `Light` class to add itself on initialize
+  def self.add_light(light : Map::Light)
+    @@lights << light
+  end
+
+  # Removes an light onto the `lights` array.
+  # Used by the `Light` class to remove itself on `Light#destroy`
+  def self.delete_light(light : Map::Light)
+    @@lights.delete(light)
+  end
 
   # Array of all actors created
-  class_getter actors : Array(Actor) = [] of Actor
+  @@actors : Array(Actor) = [] of Actor
 
   # Adds an actor onto the `actors` array.
   # Used by the `Actor` class to add itself on initialize

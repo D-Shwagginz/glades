@@ -12,7 +12,7 @@ module Glades
 
     # Update light values
     @@lights.each do |light|
-      Lights.update(@@shader, light)
+      Lights.update(@@shader, light.light)
     end
 
     # Updates each actor
