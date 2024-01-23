@@ -39,14 +39,8 @@ class MapFile
       else
         num_of_objects = objects.size.to_u16
 
-        objects.each do |object|
-          if object.is_a?(DObj)
-            num_of_objects += object.num_of_objects - 1
-          end
-        end
-
-        io.write_bytes(num_of_objects.to_u16, IO::ByteFormat::LittleEndian) unless write_to_map
-        byte_size += 2 unless write_to_map
+        io.write_bytes(num_of_objects.to_u16, IO::ByteFormat::LittleEndian)
+        byte_size += 2
 
         objects.each do |object|
           if object.is_a?(DObj)
@@ -99,6 +93,10 @@ class MapFile
             obj.objects << ColorCube.read(file)
           when Objects::TexCube.value
             obj.objects << TexCube.read(file)
+          when Objects::DObj.value
+            obj.objects << DObj.read(file, true)
+          when Objects::Light.value
+            obj.objects << Light.read(file)
           end
         end
 

@@ -31,7 +31,7 @@ module Glades
     end
 
     # Create lights
-    @@lights << Lights.create(Lights::Type::Point, Raylib::Vector3.new(x: 0, y: 0, z: 0), Raylib::Vector3.new, Raylib::WHITE, @@shader)
+    @@lights << Lights.create(Lights::Type::Point, Raylib::Vector3.new(x: 0, y: 0, z: 0), Raylib::Vector3.new, Raylib::Color.new(r: 255, g: 10, b: 10), @@shader)
 
     until Raylib.close_window?
       # Player spawn test
