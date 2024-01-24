@@ -2,20 +2,33 @@ module Glades
   class Actor
     property location : Raylib::Vector3
     property rotation : Raylib::Vector3
+    property has_collision : Bool
+    property light_layer : UInt16 = 0
     getter bounding_box_scale : Raylib::Vector3
     getter bounding_box : Raylib::BoundingBox
 
     def initialize(
       @location : Raylib::Vector3 = Raylib::Vector3.new,
       @rotation : Raylib::Vector3 = Raylib::Vector3.new,
+      @has_collision : Bool = true,
       @bounding_box_scale : Raylib::Vector3 = Raylib::Vector3.new
     )
       @bounding_box = Raylib::BoundingBox.new(
-        min: Raylib::Vector3.new(x: @bounding_box_scale.x*0.5 + @location.x, y: @location.y, z: @bounding_box_scale.z*0.5 + @location.z),
-        max: Raylib::Vector3.new(x: @bounding_box_scale.x*1.5 + @location.x, y: @bounding_box_scale.y + @location.y, z: @bounding_box_scale.z*1.5 + @location.z)
+        min: Raylib::Vector3.new(x: (-@bounding_box_scale.x)*0.5 + @location.x, y: @location.y, z: (-@bounding_box_scale.z)*0.5 + @location.z),
+        max: Raylib::Vector3.new(x: @bounding_box_scale.x*0.5 + @location.x, y: @bounding_box_scale.y + @location.y, z: @bounding_box_scale.z*0.5 + @location.z)
       )
 
+      Glades.light_layer_check(@light_layer)
+
       Glades.add_actor(self)
+    end
+
+    # Resets the bounding box to the location of the actor
+    def reset_bounding_box
+      @bounding_box = Raylib::BoundingBox.new(
+        min: Raylib::Vector3.new(x: (-@bounding_box_scale.x)*0.5 + @location.x, y: @location.y, z: (-@bounding_box_scale.z)*0.5 + @location.z),
+        max: Raylib::Vector3.new(x: @bounding_box_scale.x*0.5 + @location.x, y: @bounding_box_scale.y + @location.y, z: @bounding_box_scale.z*0.5 + @location.z)
+      )
     end
 
     # The update code that is run by `Glades.update`
@@ -30,6 +43,11 @@ module Glades
     # def collided(other_actor : Actor)
     # end
 
+    # The function to set up a shader
+    # def set_shader(shader : Raylib::Shader)
+    # end
+
+    # The function to destroy the actor
     def destroy
       Glades.delete_actor(self)
     end

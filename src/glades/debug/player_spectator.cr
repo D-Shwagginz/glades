@@ -6,6 +6,7 @@ module Glades
     def initialize(
       @location : Raylib::Vector3 = Raylib::Vector3.new,
       @rotation : Raylib::Vector3 = Raylib::Vector3.new,
+      @has_collision : Bool = true,
       @bounding_box_scale : Raylib::Vector3 = Raylib::Vector3.new
     )
       @bounding_box = Raylib::BoundingBox.new(

@@ -6,6 +6,7 @@ module Glades
 
     @camera_relative_location : Raylib::Vector3 = Raylib::Vector3.new
 
+    # 0 = No Collision
     # 1 = "Pushes the player out in the direction from the collision_center to the player"
     # 2 = "Resets the player to the location before the collision"
     @collision_mode = 2
@@ -15,6 +16,7 @@ module Glades
     def initialize(
       @location : Raylib::Vector3 = Raylib::Vector3.new,
       @rotation : Raylib::Vector3 = Raylib::Vector3.new,
+      @has_collision : Bool = true,
       @bounding_box_scale : Raylib::Vector3 = Raylib::Vector3.new
     )
       @bounding_box = Raylib::BoundingBox.new(
