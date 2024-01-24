@@ -1,6 +1,6 @@
 map
 map
-2 2 2
+100 100 100
 
 # First line can either be "map" or "dobj"
 # "dobj" files can be loaded in a map

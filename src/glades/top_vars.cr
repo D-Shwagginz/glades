@@ -17,7 +17,6 @@ module Glades
   # Used by the `Light` class to add itself on initialize
   def self.add_light(light : Map::Light)
     @@lights << light
-    
   end
 
   # Removes an light onto the `lights` array.

@@ -17,6 +17,11 @@ module Glades
       ambient_loc = Raylib.get_shader_location(shader, "ambient")
       Raylib.set_shader_value(shader, ambient_loc, LibC::Float[ambient_light.r/255, ambient_light.g/255, ambient_light.b/255, 1.0], Raylib::ShaderUniformDataType::Vec4.value)
 
+      # Sets the light falloff
+      # Uses a vector, but ignores the second variable because pointers are wack
+      light_falloff_loc = Raylib.get_shader_location(shader, "lightFalloff")
+      Raylib.set_shader_value(shader, light_falloff_loc, LibC::Float[Glades::GameConstants::LIGHT_FALLOFF, 0.0], Raylib::ShaderUniformDataType::Vec2.value)
+
       @@shaders << shader
     end
 

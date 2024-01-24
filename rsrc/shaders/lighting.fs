@@ -37,6 +37,7 @@ struct Light {
 uniform Light lights[MAX_LIGHTS];
 uniform vec4 ambient;
 uniform vec3 viewPos;
+uniform vec2 lightFalloff;
 
 void main()
 {
@@ -85,4 +86,21 @@ void main()
 
     // Gamma correction
     finalColor = pow(finalColor, vec4(1.0/2.2));
+
+     // Distance calculation
+    float dist = length(viewPos - fragPosition);
+
+    // Exponential color falloff
+    float falloffFactor = 1.0/exp((dist*lightFalloff.x)*(dist*lightFalloff.x));
+
+    // Linear fog (less nice)
+    //const float fogStart = 2.0;
+    //const float fogEnd = 10.0;
+    //float fogFactor = (fogEnd - dist)/(fogEnd - fogStart);
+
+    falloffFactor = clamp(falloffFactor, 0.4, 1.0);
+
+    vec4 lightColor = vec4(0.0, 0.0, 0.0, 1.0);
+
+    finalColor = mix(lightColor, finalColor, falloffFactor);
 }
