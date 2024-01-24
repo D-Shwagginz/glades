@@ -8,12 +8,15 @@ class MapFile
       io.write_bytes(Objects::Light.value.to_u8, IO::ByteFormat::LittleEndian)
       byte_size += 1
 
+      io.write_bytes(light_layer.to_u16, IO::ByteFormat::LittleEndian)
+      byte_size += 2
+
       io.write_bytes(location.x.to_i16, IO::ByteFormat::LittleEndian)
-      byte_size += 1
+      byte_size += 2
       io.write_bytes(location.y.to_i16, IO::ByteFormat::LittleEndian)
-      byte_size += 1
+      byte_size += 2
       io.write_bytes(location.z.to_i16, IO::ByteFormat::LittleEndian)
-      byte_size += 1
+      byte_size += 2
 
       io.write_bytes(color.x.to_u8, IO::ByteFormat::LittleEndian)
       byte_size += 1
@@ -27,6 +30,8 @@ class MapFile
 
     def self.read(file : IO) : Light
       object = Light.new
+
+      object.light_layer = file.read_bytes(UInt16, IO::ByteFormat::LittleEndian)
 
       location = Vector3.new
       location.x = file.read_bytes(Int16, IO::ByteFormat::LittleEndian)
@@ -63,13 +68,15 @@ class MapFile
         end
       end
 
-      light.location.x = parameters[0].to_i16
-      light.location.y = parameters[1].to_i16
-      light.location.z = parameters[2].to_i16
+      light.light_layer = parameters[0].to_u16
 
-      light.color.x = parameters[3].to_u8
-      light.color.y = parameters[4].to_u8
-      light.color.z = parameters[5].to_u8
+      light.location.x = parameters[1].to_i16
+      light.location.y = parameters[2].to_i16
+      light.location.z = parameters[3].to_i16
+
+      light.color.x = parameters[4].to_u8
+      light.color.y = parameters[5].to_u8
+      light.color.z = parameters[6].to_u8
 
       light
     end

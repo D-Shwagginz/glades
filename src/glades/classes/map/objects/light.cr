@@ -12,6 +12,8 @@ module Glades
       )
         @bounding_box = Raylib::BoundingBox.new
 
+        @shadow_map = Raylib.load_render_texture(1024, 1024)
+
         Glades.add_light(self)
       end
 
@@ -30,7 +32,9 @@ module Glades
       )
         light = Light.new
 
-        light.has_collision = file.has_collision
+        light.light_layer = file.light_layer
+
+        Glades.light_layer_check(light.light_layer)
 
         location = Glades.mapfile_vector3_to_raylib(location) if location.is_a?(MapFile::Vector3)
         size_offset = Glades.mapfile_vector3_to_raylib(size_offset) if size_offset.is_a?(MapFile::Vector3)

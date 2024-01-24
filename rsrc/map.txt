@@ -1,6 +1,6 @@
 map
 map
-25 25 25
+2 2 2
 
 # First line can either be "map" or "dobj"
 # "dobj" files can be loaded in a map
@@ -9,17 +9,21 @@ map
 
 # The third line is only used in .dmap files, it is the ambient light for the map in terms R G B
 
-# colorcube(has_collision, location_x location_y location_z, size_x size_y size_z, color_r color_g color_b)
-# colorcube(1, 0 10 -20, 1 5 2, 250 18 190)
+# Lights will only affect objects with the same light layer
 
-# texcube(has_collision, location_x location_y location_z, size_x size_y size_z, path/to/texture)
-# texcube(1, 0 0 0, 1 1 1, ./rsrc/test.png)
+# colorcube(light_layer, has_collision, location_x location_y location_z, size_x size_y size_z, color_r color_g color_b)
+# colorcube(0, 1, 0 10 -20, 1 5 2, 250 18 190)
+
+# texcube(light_layer, has_collision, location_x location_y location_z, size_x size_y size_z, path/to/texture)
+# texcube(0, 1, 0 0 0, 1 1 1, ./rsrc/test.png)
 
 # dobj(location_x location_y location_z, size_x size_y size_z, path/to/dobj)
 # dobj(-60 0 100, 8 8 8, ./rsrc/test.dobj)
 
-# light(location_x location_y location_z, color_r color_g color_b)
-light(0 0 0, 255 0 0)
+# light(light_layer, location_x location_y location_z, color_r color_g color_b)
+light(1, 0 2 6000, 255 255 255)
+
+light(2, 0 2 6000, 255 0 0)
 
 
 # Big House

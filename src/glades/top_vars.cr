@@ -1,6 +1,15 @@
 module Glades
+  # The amount of different light levels
+  @@light_layers : UInt16 = 1
+
+  # Check if the given light layer is higher than the highest global light layer
+  # If it is, set it to the higher light layer
+  def self.light_layer_check(light_layer : UInt16)
+    @@light_layers = (light_layer + 1) if (light_layer + 1) > @@light_layers
+  end
+
   # The current game shader
-  @@shader : Raylib::Shader = Raylib::Shader.new
+  @@shaders : Array(Raylib::Shader) = [] of Raylib::Shader
 
   @@lights : Array(Map::Light) = [] of Map::Light
 
@@ -8,6 +17,7 @@ module Glades
   # Used by the `Light` class to add itself on initialize
   def self.add_light(light : Map::Light)
     @@lights << light
+    
   end
 
   # Removes an light onto the `lights` array.
@@ -29,6 +39,10 @@ module Glades
   # Used by the `Actor` class to remove itself on `Actor#destroy`
   def self.delete_actor(actor : Actor)
     @@actors.delete(actor)
+  end
+
+  # Finds the number that the actor is in the `actors` array.
+  def self.actor_number(actor : Actor)
   end
 
   # The main player

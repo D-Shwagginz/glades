@@ -62,6 +62,10 @@ module Glades
       )
         tex_cube = TexCube.new
 
+        tex_cube.light_layer = file.light_layer
+
+        Glades.light_layer_check(tex_cube.light_layer)
+
         tex_cube.has_collision = file.has_collision
 
         location = Glades.mapfile_vector3_to_raylib(location) if location.is_a?(MapFile::Vector3)

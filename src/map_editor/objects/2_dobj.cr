@@ -18,11 +18,11 @@ class MapFile
         byte_size += 1
 
         io.write_bytes(location.x.to_i16, IO::ByteFormat::LittleEndian)
-        byte_size += 1
+        byte_size += 2
         io.write_bytes(location.y.to_i16, IO::ByteFormat::LittleEndian)
-        byte_size += 1
+        byte_size += 2
         io.write_bytes(location.z.to_i16, IO::ByteFormat::LittleEndian)
-        byte_size += 1
+        byte_size += 2
 
         io.write_bytes(size.x.to_u8, IO::ByteFormat::LittleEndian)
         byte_size += 1

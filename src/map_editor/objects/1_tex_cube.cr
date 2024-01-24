@@ -9,15 +9,18 @@ class MapFile
       io.write_bytes(Objects::TexCube.value.to_u8, IO::ByteFormat::LittleEndian)
       byte_size += 1
 
+      io.write_bytes(light_layer.to_u16, IO::ByteFormat::LittleEndian)
+      byte_size += 2
+
       io.write_bytes(has_collision.to_unsafe.to_u8, IO::ByteFormat::LittleEndian)
       byte_size += 1
 
       io.write_bytes(location.x.to_i16, IO::ByteFormat::LittleEndian)
-      byte_size += 1
+      byte_size += 2
       io.write_bytes(location.y.to_i16, IO::ByteFormat::LittleEndian)
-      byte_size += 1
+      byte_size += 2
       io.write_bytes(location.z.to_i16, IO::ByteFormat::LittleEndian)
-      byte_size += 1
+      byte_size += 2
 
       io.write_bytes(size.x.to_u8, IO::ByteFormat::LittleEndian)
       byte_size += 1
@@ -37,6 +40,8 @@ class MapFile
 
     def self.read(file : IO) : TexCube
       object = TexCube.new
+
+      object.light_layer = file.read_bytes(UInt16, IO::ByteFormat::LittleEndian)
 
       object.has_collision = false if file.read_bytes(UInt8, IO::ByteFormat::LittleEndian) == 0
 
@@ -79,17 +84,19 @@ class MapFile
         end
       end
 
-      tex_cube.has_collision = false if parameters[0].to_i == 0
+      tex_cube.light_layer = parameters[0].to_u16
 
-      tex_cube.location.x = parameters[1].to_i16
-      tex_cube.location.y = parameters[2].to_i16
-      tex_cube.location.z = parameters[3].to_i16
+      tex_cube.has_collision = false if parameters[1].to_i == 0
 
-      tex_cube.size.x = parameters[4].to_u8
-      tex_cube.size.y = parameters[5].to_u8
-      tex_cube.size.z = parameters[6].to_u8
+      tex_cube.location.x = parameters[2].to_i16
+      tex_cube.location.y = parameters[3].to_i16
+      tex_cube.location.z = parameters[4].to_i16
 
-      tex_cube.texture_path = parameters[7].to_s
+      tex_cube.size.x = parameters[5].to_u8
+      tex_cube.size.y = parameters[6].to_u8
+      tex_cube.size.z = parameters[7].to_u8
+
+      tex_cube.texture_path = parameters[8].to_s
 
       tex_cube
     end

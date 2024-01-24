@@ -48,6 +48,10 @@ module Glades
       )
         color_cube = ColorCube.new
 
+        color_cube.light_layer = file.light_layer
+
+        Glades.light_layer_check(color_cube.light_layer)
+
         color_cube.has_collision = file.has_collision
 
         location = Glades.mapfile_vector3_to_raylib(location) if location.is_a?(MapFile::Vector3)

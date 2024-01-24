@@ -9,15 +9,18 @@ class MapFile
       io.write_bytes(Objects::ColorCube.value.to_u8, IO::ByteFormat::LittleEndian)
       byte_size += 1
 
+      io.write_bytes(light_layer.to_u16, IO::ByteFormat::LittleEndian)
+      byte_size += 2
+
       io.write_bytes(has_collision.to_unsafe.to_u8, IO::ByteFormat::LittleEndian)
       byte_size += 1
 
       io.write_bytes(location.x.to_i16, IO::ByteFormat::LittleEndian)
-      byte_size += 1
+      byte_size += 2
       io.write_bytes(location.y.to_i16, IO::ByteFormat::LittleEndian)
-      byte_size += 1
+      byte_size += 2
       io.write_bytes(location.z.to_i16, IO::ByteFormat::LittleEndian)
-      byte_size += 1
+      byte_size += 2
 
       io.write_bytes(size.x.to_u8, IO::ByteFormat::LittleEndian)
       byte_size += 1
@@ -38,6 +41,8 @@ class MapFile
 
     def self.read(file : IO) : ColorCube
       object = ColorCube.new
+
+      object.light_layer = file.read_bytes(UInt16, IO::ByteFormat::LittleEndian)
 
       object.has_collision = false if file.read_bytes(UInt8, IO::ByteFormat::LittleEndian) == 0
 
@@ -82,19 +87,21 @@ class MapFile
         end
       end
 
-      color_cube.has_collision = false if parameters[0].to_i == 0
+      color_cube.light_layer = parameters[0].to_u16
 
-      color_cube.location.x = parameters[1].to_i16
-      color_cube.location.y = parameters[2].to_i16
-      color_cube.location.z = parameters[3].to_i16
+      color_cube.has_collision = false if parameters[1].to_i == 0
 
-      color_cube.size.x = parameters[4].to_u8
-      color_cube.size.y = parameters[5].to_u8
-      color_cube.size.z = parameters[6].to_u8
+      color_cube.location.x = parameters[2].to_i16
+      color_cube.location.y = parameters[3].to_i16
+      color_cube.location.z = parameters[4].to_i16
 
-      color_cube.color.x = parameters[7].to_u8
-      color_cube.color.y = parameters[8].to_u8
-      color_cube.color.z = parameters[9].to_u8
+      color_cube.size.x = parameters[5].to_u8
+      color_cube.size.y = parameters[6].to_u8
+      color_cube.size.z = parameters[7].to_u8
+
+      color_cube.color.x = parameters[8].to_u8
+      color_cube.color.y = parameters[9].to_u8
+      color_cube.color.z = parameters[10].to_u8
 
       color_cube
     end
