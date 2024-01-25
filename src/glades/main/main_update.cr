@@ -24,5 +24,8 @@ module Glades
         actor.update
       end
     end
+
+    # Updates the hud
+    @@hud.as(Hud).update if @@hud
   end
 end

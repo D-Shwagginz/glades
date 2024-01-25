@@ -47,6 +47,12 @@ module Glades
   # The main player
   @@player : Player | Nil
 
+  # The main hud
+  @@hud : Hud | Nil
+
+  # The scale of the screen
+  class_getter screen_scale : Float64 = 0.0
+
   # Loaded textures
   @@textures : Array(Tuple(String, Raylib::Texture2D)) = [] of {String, Raylib::Texture2D}
 
