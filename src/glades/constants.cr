@@ -4,7 +4,7 @@ module Glades
     BACKWARD    = Raylib::KeyboardKey::S
     RIGHT       = Raylib::KeyboardKey::D
     LEFT        = Raylib::KeyboardKey::A
-    SENSITIVITY = 0.01
+    SENSITIVITY = 0.006
   end
 
   module PlayerConstants
@@ -19,12 +19,13 @@ module Glades
     GLOBAL_SCALE   =  0.1
     LOCATION_SCALE =  0.1
     LIGHT_FALLOFF  = 0.08
+    FONT_PATH      = "./rsrc/_dev/W95FA/W95FA.otf"
   end
 
   module HudConstants
     SCREEN_RES_X   = 2000
     SCREEN_RES_Y   = 1500
-    VIEWPORT_RES_X =  400
+    VIEWPORT_RES_X =  600
     VIEWPORT_RES_Y =  300
   end
 end

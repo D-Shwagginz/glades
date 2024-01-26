@@ -1,4 +1,6 @@
 module Glades
+  class_getter font : Raylib::Font = Raylib::Font.new
+
   # The amount of different light levels
   @@light_layers : UInt16 = 1
 

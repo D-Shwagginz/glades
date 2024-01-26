@@ -11,9 +11,11 @@ module Glades
     Raylib.set_window_min_size(400, 300)
     Raylib.set_target_fps(60)
 
+    @@font = Raylib.load_font(Glades::GameConstants::FONT_PATH)
+
     Map.load(map_file: start_map)
     @@hud = Hud.new
-    @@hud.as(Hud).load_viewport
+    @@hud.as(Hud).load
 
     Glades.setup_shader
 
@@ -24,7 +26,7 @@ module Glades
          )
         @@screen_scale = Raylib.get_screen_width/Glades::HudConstants::SCREEN_RES_X
       else
-        @@screen_scale = (Raylib.get_screen_height/Glades::HudConstants::SCREEN_RES_Y).clamp(nil, 1.0)
+        @@screen_scale = Raylib.get_screen_height/Glades::HudConstants::SCREEN_RES_Y
       end
 
       # Player spawn test
@@ -49,6 +51,8 @@ module Glades
       draw
     end
 
+    Raylib.unload_font(@@font)
+
     @@shaders.each do |shader|
       Raylib.unload_shader(shader)
     end
@@ -58,10 +62,7 @@ module Glades
     end
 
     if @@hud
-      @@hud.as(Hud).unload_viewport
-      Raylib.unload_render_texture(
-        @@hud.as(Hud).hud_render_texture.as(Raylib::RenderTexture)
-      )
+      @@hud.as(Hud).unload
     end
 
     Raylib.close_window
