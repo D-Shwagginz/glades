@@ -1,4 +1,6 @@
 module Glades
+  class_property time : Int32 = 0
+
   class_getter font : Raylib::Font = Raylib::Font.new
 
   # The amount of different light levels
@@ -47,10 +49,10 @@ module Glades
   end
 
   # The main player
-  @@player : Player | Nil
+  class_getter player : Player | Nil
 
   # The main hud
-  @@hud : Hud | Nil
+  class_getter hud : Hud | Nil
 
   # The scale of the screen
   class_getter screen_scale : Float64 = 0.0

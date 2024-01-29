@@ -1,6 +1,13 @@
 module Glades
   # The player class
   class Player < Actor
+    getter max_health : Float32 = 100.0
+    getter health : Float32 = 100.0
+    getter max_stamina : Float32 = 100.0
+    getter stamina : Float32 = 100.0
+    getter max_mana : Float32 = 100.0
+    getter mana : Float32 = 100.0
+
     property movement_speed : Float32 = 0.06
     getter camera : Raylib::Camera = Raylib::Camera.new
 
@@ -48,6 +55,9 @@ module Glades
     end
 
     def update
+      @health = @max_health if @health > @max_health
+      @health = 0.0 if @health < 0.0
+
       # Match the bounding box to the player's movements
       @bounding_box = Raylib::BoundingBox.new(
         min: Raylib::Vector3.new(x: @bounding_box_scale.x*0.5 + @location.x, y: @location.y, z: @bounding_box_scale.z*0.5 + @location.z),

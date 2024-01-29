@@ -7,6 +7,8 @@ module Glades
     # The viewport which the 3d world is rendered to
     getter viewport_render_texture : Raylib::RenderTexture | Nil
 
+    getter width_scale : Float64 = 0.0
+
     # [0]: Hud Background
     @texture_paths = [
       "./rsrc/hud/HudBackground.png",
@@ -19,8 +21,6 @@ module Glades
         Glades::HudConstants::SCREEN_RES_X,
         Glades::HudConstants::SCREEN_RES_Y
       )
-
-      @width_scale = 0.0
 
       @hud_render_dest = Raylib::Rectangle.new
 
@@ -152,6 +152,10 @@ module Glades
         0,
         Raylib::BLACK
       )
+
+      if Glades.player
+        Bars.draw
+      end
     end
   end
 end

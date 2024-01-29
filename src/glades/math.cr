@@ -1,50 +1,10 @@
 module Glades
-  # def self.normalize_highest_vector(vector : Raylib::Vector3) : Raylib::Vector3
-  #   highest = Raymath.vector3_normalize(vector)
+  struct Timer
+    start_time : Float64
+    life_time : Float64
+  end
 
-  #   if vector.x.abs > vector.y.abs && vector.x.abs > vector.z.abs
-  #     highest.y = 0
-  #     highest.z = 0
-  #   elsif vector.y.abs > vector.x.abs && vector.y.abs > vector.z.abs
-  #     highest.x = 0
-  #     highest.z = 0
-  #   else
-  #     highest.x = 0
-  #     highest.y = 0
-  #   end
-
-  #   return highest
-  # end
-
-  # def self.normalize_lowest_vector(vector : Raylib::Vector3, zero_doesnt_count : Bool = false) : Raylib::Vector3
-  #   lowest = Raymath.vector3_normalize(vector)
-
-  #   if zero_doesnt_count
-  #     if vector.x.abs != 0 && vector.x.abs < vector.y.abs && vector.x.abs < vector.z.abs
-  #       lowest.y = 0
-  #       lowest.z = 0
-  #     elsif vector.y.abs != 0 && vector.y.abs < vector.x.abs && vector.y.abs < vector.z.abs
-  #       lowest.x = 0
-  #       lowest.z = 0
-  #     else
-  #       lowest.x = 0
-  #       lowest.y = 0
-  #     end
-  #   else
-  #     if vector.x.abs < vector.y.abs && vector.x.abs < vector.z.abs
-  #       lowest.y = 0
-  #       lowest.z = 0
-  #     elsif vector.y.abs < vector.x.abs && vector.y.abs < vector.z.abs
-  #       lowest.x = 0
-  #       lowest.z = 0
-  #     else
-  #       lowest.x = 0
-  #       lowest.y = 0
-  #     end
-  #   end
-
-  #   return lowest
-  # end
+  def self.timer()
 
   def self.mapfile_vector3_to_raylib(v3 : MapFile::Vector3) : Raylib::Vector3
     return Raylib::Vector3.new(x: v3.x, y: v3.y, z: v3.z)
