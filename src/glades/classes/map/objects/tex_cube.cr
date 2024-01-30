@@ -92,7 +92,7 @@ module Glades
 
         tex_cube.reset_texture
 
-        mesh = Glades.gen_mesh_cube(tex_cube.texture, Raylib::Rectangle.new(width: -tex_cube.texture.width, height: -tex_cube.texture.height), tex_cube.size)
+        mesh = Glades.gen_mesh_cube(tex_cube.texture, Raylib::Rectangle.new(width: tex_cube.texture.width, height: tex_cube.texture.height), tex_cube.size)
 
         tex_cube.model = Raylib.load_model_from_mesh(mesh)
 

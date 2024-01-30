@@ -93,61 +93,61 @@ module Glades
     RLGL.color_4ub(color.r, color.g, color.b, 255)
     # Front face
     RLGL.normal_3f(0.0, 0.0, 1.0)
-    RLGL.texcoord_2f(source.x/tex_width, (source.y + source.height)/tex_height + 0.1)
+    RLGL.texcoord_2f(source.x/tex_width, (source.y + source.height)/tex_height)
     RLGL.vertex_3f(x - width/2, y - height/2, z + length/2)
-    RLGL.texcoord_2f((source.x + source.width)/tex_width + 0.1, (source.y + source.height)/tex_height + 0.1)
+    RLGL.texcoord_2f((source.x + source.width)/tex_width, (source.y + source.height)/tex_height)
     RLGL.vertex_3f(x + width/2, y - height/2, z + length/2)
-    RLGL.texcoord_2f((source.x + source.width)/tex_width + 0.1, source.y/tex_height)
+    RLGL.texcoord_2f((source.x + source.width)/tex_width, source.y/tex_height)
     RLGL.vertex_3f(x + width/2, y + height/2, z + length/2)
     RLGL.texcoord_2f(source.x/tex_width, source.y/tex_height)
     RLGL.vertex_3f(x - width/2, y + height/2, z + length/2)
     # Back face
     RLGL.normal_3f(0.0, 0.0, -1.0)
-    RLGL.texcoord_2f((source.x + source.width)/tex_width + 0.1, (source.y + source.height)/tex_height + 0.1)
+    RLGL.texcoord_2f((source.x + source.width)/tex_width, (source.y + source.height)/tex_height)
     RLGL.vertex_3f(x - width/2, y - height/2, z - length/2)
-    RLGL.texcoord_2f((source.x + source.width)/tex_width + 0.1, source.y/tex_height)
+    RLGL.texcoord_2f((source.x + source.width)/tex_width, source.y/tex_height)
     RLGL.vertex_3f(x - width/2, y + height/2, z - length/2)
     RLGL.texcoord_2f(source.x/tex_width, source.y/tex_height)
     RLGL.vertex_3f(x + width/2, y + height/2, z - length/2)
-    RLGL.texcoord_2f(source.x/tex_width, (source.y + source.height)/tex_height + 0.1)
+    RLGL.texcoord_2f(source.x/tex_width, (source.y + source.height)/tex_height)
     RLGL.vertex_3f(x + width/2, y - height/2, z - length/2)
     # Top face
     RLGL.normal_3f(0.0, 1.0, 0.0)
     RLGL.texcoord_2f(source.x/tex_width, source.y/tex_height)
     RLGL.vertex_3f(x - width/2, y + height/2, z - length/2)
-    RLGL.texcoord_2f(source.x/tex_width, (source.y + source.height)/tex_height + 0.1)
+    RLGL.texcoord_2f(source.x/tex_width, (source.y + source.height)/tex_height)
     RLGL.vertex_3f(x - width/2, y + height/2, z + length/2)
-    RLGL.texcoord_2f((source.x + source.width)/tex_width + 0.1, (source.y + source.height)/tex_height + 0.1)
+    RLGL.texcoord_2f((source.x + source.width)/tex_width, (source.y + source.height)/tex_height)
     RLGL.vertex_3f(x + width/2, y + height/2, z + length/2)
-    RLGL.texcoord_2f((source.x + source.width)/tex_width + 0.1, source.y/tex_height)
+    RLGL.texcoord_2f((source.x + source.width)/tex_width, source.y/tex_height)
     RLGL.vertex_3f(x + width/2, y + height/2, z - length/2)
     # Bottom face
     RLGL.normal_3f(0.0, -1.0, 0.0)
-    RLGL.texcoord_2f((source.x + source.width)/tex_width + 0.1, source.y/tex_height)
+    RLGL.texcoord_2f((source.x + source.width)/tex_width, source.y/tex_height)
     RLGL.vertex_3f(x - width/2, y - height/2, z - length/2)
     RLGL.texcoord_2f(source.x/tex_width, source.y/tex_height)
     RLGL.vertex_3f(x + width/2, y - height/2, z - length/2)
-    RLGL.texcoord_2f(source.x/tex_width, (source.y + source.height)/tex_height + 0.1)
+    RLGL.texcoord_2f(source.x/tex_width, (source.y + source.height)/tex_height)
     RLGL.vertex_3f(x + width/2, y - height/2, z + length/2)
-    RLGL.texcoord_2f((source.x + source.width)/tex_width + 0.1, (source.y + source.height)/tex_height + 0.1)
+    RLGL.texcoord_2f((source.x + source.width)/tex_width, (source.y + source.height)/tex_height)
     RLGL.vertex_3f(x - width/2, y - height/2, z + length/2)
     # Right face
     RLGL.normal_3f(1.0, 0.0, 0.0)
-    RLGL.texcoord_2f((source.x + source.width)/tex_width + 0.1, (source.y + source.height)/tex_height + 0.1)
+    RLGL.texcoord_2f((source.x + source.width)/tex_width, (source.y + source.height)/tex_height)
     RLGL.vertex_3f(x + width/2, y - height/2, z - length/2)
-    RLGL.texcoord_2f((source.x + source.width)/tex_width + 0.1, source.y/tex_height)
+    RLGL.texcoord_2f((source.x + source.width)/tex_width, source.y/tex_height)
     RLGL.vertex_3f(x + width/2, y + height/2, z - length/2)
     RLGL.texcoord_2f(source.x/tex_width, source.y/tex_height)
     RLGL.vertex_3f(x + width/2, y + height/2, z + length/2)
-    RLGL.texcoord_2f(source.x/tex_width, (source.y + source.height)/tex_height + 0.1)
+    RLGL.texcoord_2f(source.x/tex_width, (source.y + source.height)/tex_height)
     RLGL.vertex_3f(x + width/2, y - height/2, z + length/2)
     # Left face
     RLGL.normal_3f(-1.0, 0.0, 0.0)
-    RLGL.texcoord_2f(source.x/tex_width, (source.y + source.height)/tex_height + 0.1)
+    RLGL.texcoord_2f(source.x/tex_width, (source.y + source.height)/tex_height)
     RLGL.vertex_3f(x - width/2, y - height/2, z - length/2)
-    RLGL.texcoord_2f((source.x + source.width)/tex_width + 0.1, (source.y + source.height)/tex_height + 0.1)
+    RLGL.texcoord_2f((source.x + source.width)/tex_width, (source.y + source.height)/tex_height)
     RLGL.vertex_3f(x - width/2, y - height/2, z + length/2)
-    RLGL.texcoord_2f((source.x + source.width)/tex_width + 0.1, source.y/tex_height)
+    RLGL.texcoord_2f((source.x + source.width)/tex_width, source.y/tex_height)
     RLGL.vertex_3f(x - width/2, y + height/2, z + length/2)
     RLGL.texcoord_2f(source.x/tex_width, source.y/tex_height)
     RLGL.vertex_3f(x - width/2, y + height/2, z - length/2)
@@ -168,29 +168,35 @@ module Glades
     mesh = Raylib.gen_mesh_cube(width, height, length)
 
     texcoords = [
-      source.x/tex_width, (source.y + source.height)/tex_height + 0.1,
-      (source.x + source.width)/tex_width + 0.1, (source.y + source.height)/tex_height + 0.1,
-      (source.x + source.width)/tex_width + 0.1, source.y/tex_height,
+      # Front Face
+      source.x/tex_width, (source.y + source.height)/tex_height + 0.0314,
+      (source.x + source.width)/tex_width + 0.0314, (source.y + source.height)/tex_height + 0.0314,
+      (source.x + source.width)/tex_width + 0.0314, source.y/tex_height,
       source.x/tex_width, source.y/tex_height,
-      (source.x + source.width)/tex_width + 0.1, (source.y + source.height)/tex_height + 0.1,
-      (source.x + source.width)/tex_width + 0.1, source.y/tex_height,
+      # Back Face
+      (source.x + source.width)/tex_width + 0.0314, (source.y + source.height)/tex_height + 0.0314,
+      (source.x + source.width)/tex_width + 0.0314, source.y/tex_height,
       source.x/tex_width, source.y/tex_height,
-      source.x/tex_width, (source.y + source.height)/tex_height + 0.1,
+      source.x/tex_width, (source.y + source.height)/tex_height + 0.0314,
+      # Top Face
       source.x/tex_width, source.y/tex_height,
-      source.x/tex_width, (source.y + source.height)/tex_height + 0.1,
-      (source.x + source.width)/tex_width + 0.1, (source.y + source.height)/tex_height + 0.1,
-      (source.x + source.width)/tex_width + 0.1, source.y/tex_height,
-      (source.x + source.width)/tex_width + 0.1, source.y/tex_height,
+      source.x/tex_width, (source.y + source.height)/tex_height + 0.0314,
+      (source.x + source.width)/tex_width + 0.0314, (source.y + source.height)/tex_height + 0.0314,
+      (source.x + source.width)/tex_width + 0.0314, source.y/tex_height,
+      # Bottom Face
+      (source.x + source.width)/tex_width + 0.0314, source.y/tex_height,
       source.x/tex_width, source.y/tex_height,
-      source.x/tex_width, (source.y + source.height)/tex_height + 0.1,
-      (source.x + source.width)/tex_width + 0.1, (source.y + source.height)/tex_height + 0.1,
-      (source.x + source.width)/tex_width + 0.1, (source.y + source.height)/tex_height + 0.1,
-      (source.x + source.width)/tex_width + 0.1, source.y/tex_height,
+      source.x/tex_width, (source.y + source.height)/tex_height + 0.0314,
+      (source.x + source.width)/tex_width + 0.0314, (source.y + source.height)/tex_height + 0.0314,
+      # Right Face
+      (source.x + source.width)/tex_width + 0.0314, (source.y + source.height)/tex_height + 0.0314,
+      (source.x + source.width)/tex_width + 0.0314, source.y/tex_height,
       source.x/tex_width, source.y/tex_height,
-      source.x/tex_width, (source.y + source.height)/tex_height + 0.1,
-      source.x/tex_width, (source.y + source.height)/tex_height + 0.1,
-      (source.x + source.width)/tex_width + 0.1, (source.y + source.height)/tex_height + 0.1,
-      (source.x + source.width)/tex_width + 0.1, source.y/tex_height,
+      source.x/tex_width, (source.y + source.height)/tex_height + 0.0314,
+      # Left Face
+      source.x/tex_width, (source.y + source.height)/tex_height + 0.0314,
+      (source.x + source.width)/tex_width + 0.0314, (source.y + source.height)/tex_height + 0.0314,
+      (source.x + source.width)/tex_width + 0.0314, source.y/tex_height,
       source.x/tex_width, source.y/tex_height,
     ]
 
