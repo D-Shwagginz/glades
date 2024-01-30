@@ -10,8 +10,10 @@ module Glades
     getter width_scale : Float64 = 0.0
 
     # [0]: Hud Background
+    # [1]: Baseball Bat
     @texture_paths = [
       "./rsrc/hud/HudBackground.png",
+      "./rsrc/hud/Bat.png",
     ]
 
     @loaded_textures : Array(Tuple(String, Raylib::Texture)) = [] of Tuple(String, Raylib::Texture)
@@ -138,8 +140,8 @@ module Glades
       Raylib.draw_text_ex(
         Glades.font,
         "Day : 99",
-        Raylib::Vector2.new(x: @width_scale + 1720, y: 30),
-        40,
+        Raylib::Vector2.new(x: 1722*@width_scale, y: 30),
+        40*@width_scale,
         0,
         Raylib::BLACK
       )
@@ -147,10 +149,29 @@ module Glades
       Raylib.draw_text_ex(
         Glades.font,
         "Time : 1:48 PM",
-        Raylib::Vector2.new(x: @width_scale + 1720, y: 80),
-        40,
+        Raylib::Vector2.new(x: 1722*@width_scale, y: 80),
+        40*@width_scale,
         0,
         Raylib::BLACK
+      )
+
+      Raylib.draw_texture_pro(
+        get_texture(@texture_paths[1]),
+        Raylib::Rectangle.new(
+          x: 0,
+          y: 0,
+          width: get_texture(@texture_paths[1]).width,
+          height: get_texture(@texture_paths[1]).height,
+        ),
+        Raylib::Rectangle.new(
+          x: 1734*@width_scale,
+          y: 200,
+          width: get_texture(@texture_paths[1]).width*8*@width_scale,
+          height: get_texture(@texture_paths[1]).height*8,
+        ),
+        Raylib::Vector2.new,
+        0.0,
+        Raylib::WHITE
       )
 
       if Glades.player

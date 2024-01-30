@@ -1,8 +1,6 @@
 module Glades
   # Updates the game
   def self.update
-    
-
     if @@player
       # Update the shader with the camera view vector (points towards { 0.0f, 0.0f, 0.0f })
       camera_pos = LibC::Float[@@player.as(Player).camera.position.x, @@player.as(Player).camera.position.y, @@player.as(Player).camera.position.z]

@@ -1,10 +1,11 @@
 module Glades
-  struct Timer
-    start_time : Float64
-    life_time : Float64
+  def self.timer(time_length : Int | Float, &block : self ->)
+    start_time = Raylib.get_time
+    end_time = Raylib.get_time + time_length
+    until start_time >= end_time
+      yield
+    end
   end
-
-  def self.timer()
 
   def self.mapfile_vector3_to_raylib(v3 : MapFile::Vector3) : Raylib::Vector3
     return Raylib::Vector3.new(x: v3.x, y: v3.y, z: v3.z)

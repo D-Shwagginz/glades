@@ -3,8 +3,8 @@ module Glades
   def self.run(start_map : MapFile = MapFile.new)
     @@start_map = start_map
 
-    resx = 2000
-    resy = 1500
+    resx = 1920
+    resy = 1080
 
     Raylib.init_window(resx, resy, "Glades")
     Raylib.set_window_state(Raylib::ConfigFlags::WindowResizable)

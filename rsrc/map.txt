@@ -1,6 +1,6 @@
 map
 map
-100 100 100
+20 20 20
 
 # First line can either be "map" or "dobj"
 # "dobj" files can be loaded in a map
@@ -21,9 +21,7 @@ map
 # dobj(-60 0 100, 8 8 8, ./rsrc/test.dobj)
 
 # light(light_layer, location_x location_y location_z, color_r color_g color_b)
-light(1, 0 2 6000, 255 255 255)
-
-light(2, 0 2 6000, 255 0 0)
+#light(1, 0 2 6000, 255 255 255)
 
 
 # Big House

@@ -76,13 +76,11 @@ void main()
     }
 
     finalColor = (texelColor*((colDiffuse + vec4(specular, 1.0))*vec4(lightDot, 1.0)));
+    finalColor += texelColor*ambient;
 
-    if (texelColor.x != 1.0 && texelColor.y != 1.0 && texelColor.z != 1.0){
-        finalColor += texelColor*ambient;
-    }
-    else {
-        finalColor += colDiffuse*ambient;
-    }
+    // Color for colorcube's
+    // finalColor += colDiffuse*ambient;
+
 
     // Gamma correction
     finalColor = pow(finalColor, vec4(1.0/2.2));
