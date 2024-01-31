@@ -37,7 +37,7 @@ module Glades
         z: (@bounding_box.max.z + @bounding_box.min.z)/2
       )
 
-      Glades.add_actor(self)
+      # Glades.add_actor(self)
 
       @camera.position = @location + @camera_relative_location
 

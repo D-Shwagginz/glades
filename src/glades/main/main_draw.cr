@@ -18,6 +18,8 @@ module Glades
             end
           end
 
+          @@player.as(Player).draw
+
           # Draws each light box
           @@lights.each do |light|
             light.draw

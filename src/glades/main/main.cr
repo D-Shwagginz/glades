@@ -1,7 +1,7 @@
 module Glades
   # Runs the program
-  def self.run(start_map : MapFile = MapFile.new)
-    @@start_map = start_map
+  def self.run(start_map_path : String | Path)
+    @@start_map = MapFile.read(start_map_path)
 
     resx = 1920
     resy = 1080
@@ -13,7 +13,7 @@ module Glades
 
     @@font = Raylib.load_font(Glades::GameConstants::FONT_PATH)
 
-    Map.load(map_file: start_map)
+    Map.load(map_file: @@start_map)
     @@hud = Hud.new
     @@hud.as(Hud).load
 
@@ -32,12 +32,18 @@ module Glades
       if Raylib.key_pressed?(Raylib::KeyboardKey::R)
         export_text("./rsrc/obj.txt", "./rsrc/")
         export_text("./rsrc/map.txt", "./rsrc/")
+        @@start_map = MapFile.read(start_map_path)
+
+        Lights.destroy_all
 
         @@actors.each do |actor|
           actor.destroy
         end
 
-        Map.load(map_file: start_map)
+        Glades.delete_all_actors
+        Glades.delete_all_shaders
+
+        Map.load(map_file: @@start_map)
 
         Glades.setup_shader
       end

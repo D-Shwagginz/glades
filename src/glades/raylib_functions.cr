@@ -66,6 +66,13 @@ module Glades
     end
 
     def self.destroy_all
+      Glades.lights.each do |light|
+        light.light.enabled = false
+        update(light.shader, light.light)
+
+        Glades.delete_light(light)
+        @@count -= 1
+      end
     end
   end
 

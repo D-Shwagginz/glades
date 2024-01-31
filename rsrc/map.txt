@@ -26,3 +26,5 @@ light(1, 0 2 6000, 255 255 255)
 
 # Big House
 dobj(-60 0 100, 8 8 8, ./rsrc/house.dobj)
+
+dobj(60 0 100, 2 2 2, ./rsrc/house.dobj)

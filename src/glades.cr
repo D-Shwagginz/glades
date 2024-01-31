@@ -8,7 +8,7 @@ require "option_parser"
 module Glades
   VERSION = "0.0.1"
 
-  @@start_map
+  @@start_map : MapFile = MapFile.new
 
   def self.run_cli
     start_map_location : String = ""
@@ -22,7 +22,7 @@ module Glades
       end
     end
 
-    run(MapFile.read(start_map_location))
+    run(start_map_location)
   end
 end
 

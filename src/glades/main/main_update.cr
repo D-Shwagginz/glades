@@ -25,6 +25,8 @@ module Glades
       end
     end
 
+    @@player.as(Player).update if @@player
+
     # Updates the hud
     @@hud.as(Hud).update if @@hud
   end

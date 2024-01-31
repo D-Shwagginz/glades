@@ -35,4 +35,8 @@ module Glades
       light.load_light(@@shaders[light.light_layer])
     end
   end
+
+  def self.delete_all_shaders
+    @@shaders = [] of Raylib::Shader
+  end
 end

@@ -3,6 +3,7 @@ module Glades
     class Light < Actor
       property color : Raylib::Color = Raylib::Color.new
       property light : Glades::Light = Glades::Light.new
+      property shader : Raylib::Shader = Raylib::Shader.new
 
       def initialize(
         @location : Raylib::Vector3 = Raylib::Vector3.new,
@@ -18,6 +19,7 @@ module Glades
       end
 
       def load_light(shader : Raylib::Shader)
+        @shader = shader
         @light = Lights.create(Lights::Type::Point, @location, Raylib::Vector3.new, @color, shader)
       end
 
