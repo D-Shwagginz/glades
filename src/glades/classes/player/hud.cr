@@ -9,11 +9,19 @@ module Glades
 
     getter width_scale : Float64 = 0.0
 
+    enum TexturePaths
+      HudBackground = 0
+      Crosshair     = 2
+      BaseballBat   = 1
+    end
+
     # [0]: Hud Background
     # [1]: Baseball Bat
+    # [2]: Crosshair
     @texture_paths = [
       "./rsrc/hud/HudBackground.png",
       "./rsrc/hud/Bat.png",
+      "./rsrc/hud/Crosshair.png",
     ]
 
     @loaded_textures : Array(Tuple(String, Raylib::Texture)) = [] of Tuple(String, Raylib::Texture)
@@ -29,6 +37,10 @@ module Glades
       @hud_background_dest = Raylib::Rectangle.new
 
       @viewport_dest = Raylib::Rectangle.new
+
+      @crosshair_dest = Raylib::Rectangle.new
+
+      @weapon_dest = Raylib::Rectangle.new
     end
 
     def get_texture(path : String) : Raylib::Texture
@@ -103,17 +115,31 @@ module Glades
         width: 210*8*@width_scale,
         height: 140*8,
       )
+
+      @crosshair_dest = Raylib::Rectangle.new(
+        x: (@viewport_dest.width/2 + @crosshair_dest.width/2)*@width_scale,
+        y: @viewport_dest.height/2 + @crosshair_dest.height/2,
+        width: get_texture(@texture_paths[TexturePaths::Crosshair.value]).width*4*@width_scale,
+        height: get_texture(@texture_paths[TexturePaths::Crosshair.value]).height*4,
+      )
+
+      @weapon_dest = Raylib::Rectangle.new(
+        x: 1734*@width_scale,
+        y: 200,
+        width: get_texture(@texture_paths[TexturePaths::BaseballBat.value]).width*8*@width_scale,
+        height: get_texture(@texture_paths[TexturePaths::BaseballBat.value]).height*8,
+      )
     end
 
     # Draws stuff onto the hud
     def draw
       Raylib.draw_texture_pro(
-        get_texture(@texture_paths[0]),
+        get_texture(@texture_paths[TexturePaths::HudBackground.value]),
         Raylib::Rectangle.new(
           x: 0,
           y: 0,
-          width: get_texture(@texture_paths[0]).width,
-          height: get_texture(@texture_paths[0]).height,
+          width: get_texture(@texture_paths[TexturePaths::HudBackground.value]).width,
+          height: get_texture(@texture_paths[TexturePaths::HudBackground.value]).height,
         ),
         @hud_background_dest,
         Raylib::Vector2.new,
@@ -137,6 +163,20 @@ module Glades
         )
       end
 
+      Raylib.draw_texture_pro(
+        get_texture(@texture_paths[TexturePaths::Crosshair.value]),
+        Raylib::Rectangle.new(
+          x: 0,
+          y: 0,
+          width: get_texture(@texture_paths[TexturePaths::Crosshair.value]).width,
+          height: get_texture(@texture_paths[TexturePaths::Crosshair.value]).height,
+        ),
+        @crosshair_dest,
+        Raylib::Vector2.new,
+        0.0,
+        Raylib::WHITE
+      )
+
       Raylib.draw_text_ex(
         Glades.font,
         "Day : 99",
@@ -156,19 +196,14 @@ module Glades
       )
 
       Raylib.draw_texture_pro(
-        get_texture(@texture_paths[1]),
+        get_texture(@texture_paths[TexturePaths::BaseballBat.value]),
         Raylib::Rectangle.new(
           x: 0,
           y: 0,
-          width: get_texture(@texture_paths[1]).width,
-          height: get_texture(@texture_paths[1]).height,
+          width: get_texture(@texture_paths[TexturePaths::BaseballBat.value]).width,
+          height: get_texture(@texture_paths[TexturePaths::BaseballBat.value]).height,
         ),
-        Raylib::Rectangle.new(
-          x: 1734*@width_scale,
-          y: 200,
-          width: get_texture(@texture_paths[1]).width*8*@width_scale,
-          height: get_texture(@texture_paths[1]).height*8,
-        ),
+        @weapon_dest,
         Raylib::Vector2.new,
         0.0,
         Raylib::WHITE
