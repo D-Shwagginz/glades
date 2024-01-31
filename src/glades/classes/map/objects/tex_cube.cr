@@ -100,7 +100,6 @@ module Glades
       end
 
       def destroy
-        Raylib.unload_model(@model)
         Glades.delete_actor(self)
       end
     end

@@ -117,8 +117,8 @@ module Glades
       )
 
       @crosshair_dest = Raylib::Rectangle.new(
-        x: (@viewport_dest.width/2 + @crosshair_dest.width/2)*@width_scale,
-        y: @viewport_dest.height/2 + @crosshair_dest.height/2,
+        x: (@viewport_dest.width/2 - @crosshair_dest.width/2),
+        y: @viewport_dest.height/2 - @crosshair_dest.height/2,
         width: get_texture(@texture_paths[TexturePaths::Crosshair.value]).width*4*@width_scale,
         height: get_texture(@texture_paths[TexturePaths::Crosshair.value]).height*4,
       )
@@ -212,6 +212,15 @@ module Glades
       if Glades.player
         Bars.draw
       end
+
+      Raylib.draw_text_ex(
+        Glades.font,
+        "#{Raylib.get_fps}",
+        Raylib::Vector2.new(x: @width_scale, y: 0),
+        40*@width_scale,
+        0,
+        Raylib::GREEN
+      )
     end
   end
 end

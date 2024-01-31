@@ -64,6 +64,9 @@ module Glades
         light.color.a/255.0_f32,
       ], Raylib::ShaderUniformDataType::Vec4)
     end
+
+    def self.destroy_all
+    end
   end
 
   def self.draw_cube_texture(texture : Raylib::Texture2D, source : Raylib::Rectangle, position : Raylib::Vector3, size : Raylib::Vector3, color : Raylib::Color)

@@ -9,6 +9,19 @@ module Glades
     end
   end
 
+  def self.what_looking_at
+    camera = @@player.as(Player).camera
+    @@actors.each do |check_against|
+      Raylib.get_ray_collision_box(
+        Raylib::Ray.new(
+          position: @@player.as(Player).camera.position,
+          direction: Raylib.get_camera_forward(pointerof(camera))
+        ),
+        check_against.bounding_box
+      )
+    end
+  end
+
   def self.check_collisions(bounding_box : Raylib::BoundingBox) : Actor | Nil
     @@actors.each do |check_against|
       return check_against if (

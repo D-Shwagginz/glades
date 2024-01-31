@@ -29,6 +29,19 @@ module Glades
         @@screen_scale = Raylib.get_screen_height/Glades::HudConstants::SCREEN_RES_Y
       end
 
+      if Raylib.key_pressed?(Raylib::KeyboardKey::R)
+        export_text("./rsrc/obj.txt", "./rsrc/")
+        export_text("./rsrc/map.txt", "./rsrc/")
+
+        @@actors.each do |actor|
+          actor.destroy
+        end
+
+        Map.load(map_file: start_map)
+
+        Glades.setup_shader
+      end
+
       # Player spawn test
       if Raylib.key_pressed?(Raylib::KeyboardKey::L)
         # Raylib.disable_cursor

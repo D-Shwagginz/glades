@@ -22,6 +22,7 @@ module Glades
           @@lights.each do |light|
             light.draw
           end
+
           Raylib.end_mode_3d
         end
 

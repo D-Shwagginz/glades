@@ -41,11 +41,7 @@ module Glades
   # Removes an actor onto the `actors` array.
   # Used by the `Actor` class to remove itself on `Actor#destroy`
   def self.delete_actor(actor : Actor)
-    @@actors.delete(actor)
-  end
-
-  # Finds the number that the actor is in the `actors` array.
-  def self.actor_number(actor : Actor)
+    # @@actors.delete(actor)
   end
 
   # The main player

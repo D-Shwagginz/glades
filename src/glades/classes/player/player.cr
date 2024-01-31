@@ -8,7 +8,7 @@ module Glades
     getter max_mana : Float32 = 100.0
     getter mana : Float32 = 100.0
 
-    property movement_speed : Float32 = 0.06
+    property movement_speed : Float32 = Glades::PlayerConstants::WALK_SPEED
     getter camera : Raylib::Camera = Raylib::Camera.new
 
     @camera_relative_location : Raylib::Vector3 = Raylib::Vector3.new
@@ -55,6 +55,8 @@ module Glades
     end
 
     def update
+      @movement_speed = Glades::PlayerConstants::WALK_SPEED * Raylib.get_frame_time
+
       @health = @max_health if @health > @max_health
       @health = 0.0 if @health < 0.0
 
