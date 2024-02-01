@@ -10,6 +10,7 @@ class MapFile
     TexCube
     DObj
     Light
+    Door
   end
 
   property num_of_objects : UInt16 = 0_u16
@@ -76,6 +77,8 @@ class MapFile
         map.objects << DObj.read(file, true)
       when Objects::Light.value
         map.objects << Light.read(file)
+      when Objects::Door.value
+        map.objects << Door.read(file)
       end
     end
 

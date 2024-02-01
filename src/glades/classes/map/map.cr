@@ -15,6 +15,8 @@ module Glades
         end
       elsif object.is_a?(MapFile::Light)
         Light.from_file(object.as(MapFile::Light), location_offset, size_offset)
+      elsif object.is_a?(MapFile::Door)
+        Door.from_file(object.as(MapFile::Door), location_offset, size_offset)
       end
     end
 

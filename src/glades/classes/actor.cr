@@ -23,6 +23,10 @@ module Glades
       Glades.add_actor(self)
     end
 
+    # Runs when the player interacts with the actor
+    def interact
+    end
+
     # Resets the bounding box to the location of the actor
     def reset_bounding_box
       @bounding_box = Raylib::BoundingBox.new(

@@ -151,9 +151,7 @@ module Glades
 
       if Raylib.key_down?(ControlConstants::INTERACT)
         if Glades.what_looking_at
-          puts Glades.what_looking_at.class
-        else
-          puts "No Hit"
+          Glades.what_looking_at.as(Actor).interact
         end
       end
     end

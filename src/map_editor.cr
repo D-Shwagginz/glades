@@ -65,6 +65,9 @@ def parse_text(path : String | Path) : Tuple(String, MapFile, MapFile::DObj, Boo
         when "light"
           map.objects << MapFile::Light.from_parameters(parameters)
           dobj.objects << MapFile::Light.from_parameters(parameters)
+        when "door"
+          map.objects << MapFile::Door.from_parameters(parameters)
+          dobj.objects << MapFile::Door.from_parameters(parameters)
         end
       end
     end

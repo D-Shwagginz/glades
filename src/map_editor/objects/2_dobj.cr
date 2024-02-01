@@ -97,6 +97,8 @@ class MapFile
             obj.objects << DObj.read(file, true)
           when Objects::Light.value
             obj.objects << Light.read(file)
+          when Objects::Door.value
+            obj.objects << Door.read(file)
           end
         end
 

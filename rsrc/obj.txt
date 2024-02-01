@@ -2,7 +2,8 @@ dobj
 house
 
 # Front Side
-texcube(1, 1, 0 0 -10, 2 2 1, ./rsrc/wall_textures/Green.png)
+texcube(1, 1, 0 0 0, 2 2 1, ./rsrc/wall_textures/Green.png)
+door(0, 20 0 5, 1 1 1, ./rsrc/models/door_1)
 colorcube(0, 1, 30 0 0, 2 2 1, 0 0 255)
 
 # Roof

@@ -14,10 +14,10 @@ module Glades
     center = camera.position + Raylib.get_camera_forward(pointerof(camera)).scale(Glades::PlayerConstants::INTERACT_DISTANCE)
 
     @@actors.each do |check_against|
-      return check_against if (
-                                check_against.has_collision &&
-                                Raylib.check_collision_box_sphere?(check_against.bounding_box, center, 0.2)
-                              )
+      return check_against if ( # check_against.has_collision &&
+
+Raylib.check_collision_box_sphere?(check_against.bounding_box, center, 0.2)
+                                )
     end
   end
 
