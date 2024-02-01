@@ -5,11 +5,13 @@ module Glades
     RIGHT       = Raylib::KeyboardKey::D
     LEFT        = Raylib::KeyboardKey::A
     SENSITIVITY = 0.006
+    INTERACT    = Raylib::KeyboardKey::E
   end
 
   module PlayerConstants
-    PLAYER_SIZE = Raylib::Vector2.new(x: 10, y: 10)
-    WALK_SPEED  = 4.0_f32
+    PLAYER_SIZE       = Raylib::Vector2.new(x: 10, y: 10)
+    WALK_SPEED        = 4.0_f32
+    INTERACT_DISTANCE =       1
   end
 
   module PhysicsConstants
